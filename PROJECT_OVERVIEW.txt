@@ -1,0 +1,384 @@
+================================================================================
+ARM_SoC — PROJECT OVERVIEW
+Generated: 2026-07-17
+================================================================================
+
+WHAT THIS REPOSITORY IS
+--------------------------------------------------------------------------------
+This is ARM's "Cortex-M3 DesignStart Eval" bundle (release CM3DesignStart-r0p0-
+02rel0, 2017), used as the starting point for an in-house ARM Cortex-M3 SoC.
+It is NOT a from-scratch SoC design — it is ARM's reference evaluation kit:
+RTL for the SoC "uncore" (bus fabric, peripherals, memories) plus a licensed,
+OBFUSCATED/encrypted model of the Cortex-M3 CPU core itself (ARM does not give
+eval-kit users readable CPU RTL). Around this, the repo layers:
+  - A cycle-based Verilog simulation testbench (run in ModelSim/Questa, VCS,
+    or Xcelium) used to execute compiled firmware images against the SoC model.
+  - A software tree (CMSIS device files, startup code, retarget/UART stdio,
+    and ~20 test programs) that is compiled and loaded into that simulation.
+  - A separate "boards/" bundle of prebuilt binaries for the physical MPS2+
+    FPGA prototyping board (real hardware, not simulation).
+  - Several optional/additional ARM IP bundles (m3designstart_iot, rtc_pl031,
+    smm, trng) shipped alongside the core kit — see CONNECTIVITY section below
+    for which of these are actually wired into the simulated system today.
+
+In short: "SoC" here = Cortex-M3 core (opaque model) + CMSDK bus/peripheral
+fabric + MPS2 FPGA-shield peripheral wrapper, all instantiated under a single
+testbench top (tb_fpga_shield.v) that a Makefile-driven flow compiles and
+simulates against one test program at a time.
+
+--------------------------------------------------------------------------------
+TOP-LEVEL DIRECTORY MAP
+--------------------------------------------------------------------------------
+ARM_Cortex_M3_DesignStart_Eval_..._Release_Note.pdf
+    ARM's release note for this eval kit version. Reference only.
+
+README.md
+    Short quick-start: compile testcode -> compile testbench -> `make run
+    TESTNAME=hello`. This is the fastest way to understand "how do I run a
+    test", see FLOW section below for what actually happens under the hood.
+
+docs/
+    Four ARM PDF guides (Quick Start, RTL & Testbench User Guide, FPGA User
+    Guide, Customization Guide). These are the authoritative ARM docs for
+    this kit; anything unclear in this repo is very likely explained there.
+
+boards/Recovery/
+    Prebuilt .axf binaries (hello.axf, dhry.axf, gpio_drv.axf, etc.) and
+    firmware for the physical MPS2+ / HBI0263C FPGA board ("mbed" recovery
+    image). This is the real-hardware deployment path, separate from and
+    NOT used by the RTL simulation flow described below.
+
+cortexm3_model/
+    The licensed Cortex-M3 CPU model itself (carbon/ = Carbon Design Systems
+    cycle-accurate SystemC/DSM model used only when DSM=yes; verilog/ = the
+    obfuscated/encrypted RTL wrapper used for normal simulation, DSM=no,
+    which is the default in this repo's execution_tb/options.mk).
+
+cmsdk/logical/
+    ARM CMSDK (Cortex Microcontroller Software Development Kit) IP library:
+    AHB bus matrix, AHB-to-APB bridges, APB UART/timer/dual-timer/watchdog/
+    GPIO peripherals, SRAM/ROM/flash simulation memory models, bitband unit,
+    debug tester, etc. This is a general-purpose IP catalog; only a subset
+    of it is actually instantiated by this particular SoC build — see
+    CONNECTIVITY below.
+
+m3designstart/
+    The actual SoC integration and everything needed to build/run it:
+      logical/            RTL integration:
+        cortexm3integration_ds/   Integrates the Cortex-M3 model with the
+                                    CMSDK AHB fabric ("CoreLink SSE-050"-style
+                                    subsystem).
+        cortexm3integration_ds_obs/  Observability/debug variant.
+        fpga_top/          fpga_top.v / fpga_system.v — top-level RTL that
+                            wires the CPU+fabric subsystem to MPS2 FPGA-shield
+                            style I/O (Arduino-shield UART/SPI/I2C pins, LEDs,
+                            buttons, config logic).
+        m3ds_peripherals/  beetle_peripherals_fpga.v, m3ds_peripherals_wrapper.v
+                            — the peripheral set for this SoC (2x UART, timers,
+                            watchdog, dual-timer, GPIO, RTC, TrustZone-ish
+                            "beetle" peripherals wrapper).
+        m3ds_user_partition/  m3ds_user_partition.v — the customization layer
+                            ARM intends end users to edit to add their own
+                            peripherals (per the Customization Guide).
+        testbench/         The simulation environment:
+          verilog/tb_fpga_shield.v   TOP of simulation. Instantiates fpga_top,
+                            clock/reset generation, UART capture/monitor
+                            modules, Ethernet/CLCD/touch-screen stubs, etc.
+          execution_tb/     Makefile-driven compile+run flow (see FLOW below).
+          testcodes/        One subdirectory per test program (hello, dhry,
+                            gpio_tests, watchdog_demo, uart_tests, ...), each
+                            with its own makefile. Per a recent team decision
+                            (commit b748fab), only hello/hello.c source is
+                            still tracked in git — the other test folders keep
+                            their makefile/project files but their .c sources
+                            were intentionally removed; see FLAGS section for
+                            what this implies about their .bin files now.
+      selftest/           A second, more complete software tree originally
+                            aimed at MPS2 board self-test / Keil-project style
+                            builds (apuart, aptimer, apleds, apssp, apclcd,
+                            aplan, apsonar, aptsc, apaaci, apmem, apmain, ...).
+                            Distinct from software/common used by execution_tb.
+      software/
+        cmsis/              CMSIS-Core headers + CM3DS device files
+                            (startup_CM3DS.s, system_CM3DS.c) — GCC and ARM
+                            (armcc/DS-5) variants.
+        common/retarget/    UartStdOutInit/UartPutc/printf retargeting glue
+                            used by every testcode.
+        common/scripts/     cm3ds.ld — the GCC linker script (memory map).
+        common/validation/  NEW, untracked local directory (not part of the
+                            standard kit) containing copies of apb_mux_tests.c
+                            and uart_driver_tests.c — appears to be scratch/
+                            reference copies, not wired into any makefile.
+
+m3designstart_iot/, rtc_pl031/, smm/, trng/
+    Additional ARM IP bundles shipped in the same eval package (IoT-flavored
+    AHB interconnect + CPU wrapper + custom timers, PL031 RTC, "SMM" FPGA
+    support IP incl. SSP/I2C/I2S/VGA models, and a TRNG). These are NOT
+    dormant reference material — all four are actively instantiated in the
+    live hello-test hierarchy (verified below in CONNECTIVITY). In fact
+    m3designstart_iot/ supplies the AHB interconnect/matrix that the whole
+    design's bus fabric is actually built on, in place of the more
+    "expected" cmsdk_ahb_busmatrix.
+
+.claude/
+    Claude Code local settings (settings.local.json) — pre-existing, minor.
+
+--------------------------------------------------------------------------------
+CONNECTIVITY: WHAT'S ACTUALLY WIRED UP FOR THE "hello" SIMULATION
+--------------------------------------------------------------------------------
+(Traced from tb_fpga_shield.v down through actual module instantiations, and
+cross-checked against execution_tb/tbench.vc, the file list Questa/ModelSim
+actually compiles. Verified by direct grep, not just agent output.)
+
+MODULE HIERARCHY (default DSM=no path):
+
+  tb_fpga_shield.v
+  └─ fpga_top.v
+     └─ fpga_system.v
+        └─ m3ds_user_partition.v
+           ├─ m3ds_tscnt_48, m3ds_simple_flash        (local, same dir)
+           ├─ fpga_spi_ahb                 smm/logical/smm_common_fpga
+           │    └─ spi2apb3                smm/logical/spi2apb3
+           ├─ beetle_sysctrl               m3designstart/.../m3ds_peripherals
+           ├─ cmsdk_ahb_default_slave      cmsdk/logical/cmsdk_ahb_default_slave
+           ├─ m3ds_iot_top (u_iot_top)     m3designstart_iot/logical/m3ds_iot_top
+           │    ├─ p_beid_interconnect_f0(_ahb_mtx)   m3designstart_iot/...
+           │    │    (a CUSTOM AHB matrix — NOT cmsdk_ahb_busmatrix)
+           │    ├─ CORTEXM3INTEGRATIONDS   m3designstart/logical/
+           │    │    cortexm3integration_ds_obs/verilog  <- the CPU model lives
+           │    │    here, wrapped in obfuscated RTL
+           │    └─ p_beid_peripheral_f0    m3designstart_iot/...
+           │         (custom static-reg + 2x custom timer, NOT cmsdk_apb_timer)
+           └─ m3ds_peripherals_wrapper (u_mps2_peripherals_wrapper)
+                ├─ mps2_ahb_decoder        smm/logical/mps2_ahb_decoder
+                ├─ mps2_mem_peripherals.v (local)
+                │    ├─ cmsdk_ahb_gpio x2  cmsdk/logical/cmsdk_ahb_gpio (+cmsdk_iop_gpio)
+                │    ├─ cmsdk_ahb_slave_mux
+                │    ├─ local cmsdk_ahb_to_extmem16_psram (NOT the cmsdk/logical/ version)
+                │    └─ AHBVGA              smm/logical/vga_edk
+                ├─ fpga_apb_subsystem (u_fpga_ahb_to_apb_subsystem)
+                │    ├─ Ssp x5              smm/logical/pl022_ssp
+                │    ├─ SBCon x4            smm/logical/smm_common_fpga
+                │    ├─ apb_i2s_top         smm/logical/apb_i2s
+                │    ├─ cmsdk_apb_uart x3 more (u_apb_uart_2/3/4)
+                │    └─ scc                 smm/logical/ds703_scc_r0p3
+                └─ beetle_peripherals_fpga (u_beetle_peripherals_fpga_subsystem)
+                     ├─ cmsdk_ahb_gpio x4
+                     ├─ cmsdk_apb_dualtimers
+                     ├─ cmsdk_apb_uart (u_cmsdk_apb_uart_0 / _1)  <- UART0/UART1
+                     ├─ Rtc (u_rtc)          rtc_pl031/logical/rtc_pl031
+                     ├─ dx_trng_top (u_trng) trng/logical/top
+                     │    └─ rosc, inv_chain, rng_engine  (trng/logical/*)
+                     └─ cmsdk_apb_watchdog
+
+  Orphan files worth knowing about: m3ds_sram_subsystem_fpga.v and
+  models/generic/static_reg.v (both under m3designstart/) exist but are not
+  instantiated by anything in this tree.
+
+USED VS UNUSED — cmsdk/logical/* (this repo ships ~30 CMSDK IP blocks; only
+about a third are actually instantiated in this SoC build — the rest is
+catalog/reference IP not wired into this design):
+
+  USED:
+    cmsdk_ahb_default_slave, cmsdk_ahb_gpio (+cmsdk_iop_gpio), cmsdk_ahb_slave_mux,
+    cmsdk_apb_dualtimers, cmsdk_apb_uart, cmsdk_apb_watchdog,
+    cmsdk_apb_subsystem (only its cmsdk_irq_sync.v sub-file, not the top module)
+
+  UNUSED (present in repo, on the simulator's -y search path, never
+  instantiated by anything reachable from tb_fpga_shield.v):
+    cmsdk_ahb_busmatrix   (superseded by custom p_beid_interconnect_f0_ahb_mtx)
+    cmsdk_ahb_to_apb      (superseded by the matrix's built-in APB target port)
+    cmsdk_apb_timer       (superseded by custom p_beid_peripheral_f0_timer)
+    cmsdk_ahb_to_extmem16 (m3ds_peripherals uses its own local _psram variant)
+    cmsdk_ahb_bitband, cmsdk_ahb_downsizer64, cmsdk_ahb_upsizer64,
+    cmsdk_ahb_eg_slave, cmsdk_ahb_fileread_masters, cmsdk_ahb_master_mux,
+    cmsdk_ahb_timeout_mon, cmsdk_ahb_to_ahb_apb_async, cmsdk_ahb_to_ahb_sync(_down/_up),
+    cmsdk_ahb_to_apb_async, cmsdk_ahb_to_flash16, cmsdk_ahb_to_flash32,
+    cmsdk_apb3_eg_slave, cmsdk_apb4_eg_slave, cmsdk_apb_slave_mux,
+    cmsdk_apb_timeout_mon, cmsdk_debug_tester, cmsdk_fpga_sram, cmsdk_mcu_mtx4x2
+
+  If you ever need to add a peripheral (timer, extra UART, bitband access,
+  etc.), check this list first — several "obvious" cmsdk blocks with the
+  right name (cmsdk_apb_timer, cmsdk_ahb_busmatrix) are NOT what this SoC
+  actually uses; it uses hand-written/`m3designstart_iot`-custom equivalents
+  instead. Using the wrong one would compile (it's on the search path) but
+  never actually get instantiated/connected.
+
+TOP-LEVEL BUNDLES — corrected finding: all four are ACTIVELY USED (initial
+grep-based guess that these were dormant reference bundles was wrong; verified
+by direct instantiation + presence in execution_tb/tbench.vc):
+
+  m3designstart_iot/  USED - supplies the AHB interconnect/matrix, the CPU
+                       model wrapper instance, and two custom timers; forms
+                       the structural core of m3ds_user_partition.
+  rtc_pl031/           USED - Rtc instantiated as u_rtc inside
+                       beetle_peripherals_fpga.v.
+  smm/                 USED - all 7 subdirs reachable: SPI/AHB glue, VGA,
+                       5x SSP, 4x I2C (SBCon), I2S, and the "scc" (system
+                       control) block, all inside the peripheral wrapper.
+  trng/                USED - dx_trng_top (true random number generator)
+                       instantiated as u_trng in beetle_peripherals_fpga.v.
+  boards/               NOT USED by simulation - no .v files at all; never
+                       appears in tbench.vc or any execution_tb Makefile.
+                       Physical-FPGA-board firmware only (see directory map).
+
+Note on the -y library search paths in tbench.vc: Verilog `-y` just tells the
+simulator where to LOOK for a module if something instantiates it by name —
+being on that list does not mean a file is compiled/used. The "UNUSED" cmsdk
+blocks above are all on the search path but never actually instantiated.
+
+--------------------------------------------------------------------------------
+END-TO-END FLOW: FROM `make run TESTNAME=hello` TO SIMULATED EXECUTION
+--------------------------------------------------------------------------------
+1. COMPILE THE FIRMWARE
+   cd m3designstart/logical/testbench/testcodes/hello && make
+   -> invokes testcodes/hello/makefile, target all_gcc (TOOL_CHAIN=gcc default):
+      arm-none-eabi-gcc compiles startup_CM3DS.s + hello.c + retarget.c +
+      uart_stdout.c(+ uart_stdout1.c, WIP) + system_CM3DS.c, links with
+      software/common/scripts/cm3ds.ld, producing hello.o (ELF), then:
+        objcopy -O binary  -> hello.bin   (raw memory image)
+        objcopy -O verilog -> hello.hex   (verilog hex, alt. load path)
+        objdump -S          -> hello.lst  (disassembly listing)
+   Linker script memory map (cm3ds.ld):
+        FLASH (code) : 0x00000000, 64 KB
+        RAM  (data)  : 0x20000000, 63 KB
+   This matches the ARMv7-M/Cortex-M3 boot convention: address 0 holds the
+   vector table; word[0] = initial stack pointer (SP), word[1] = reset vector
+   (address of Reset_Handler). This is how the CPU "knows where to start" —
+   see your follow-up question, happy to go deeper on this.
+
+2. COMPILE THE TESTBENCH
+   cd execution_tb && make compile SIMULATOR=mti
+   -> vlib/vlog compiles tb_fpga_shield.v and everything it pulls in via the
+      tbench.vc file list (RTL + the obfuscated Cortex-M3 model), producing a
+      ModelSim "work" library. Default simulator is mti (Questa/ModelSim),
+      default toolchain gcc, DSM=no (i.e. using the obfuscated RTL core model,
+      not the Carbon/DSM cycle model — DSM=yes would additionally enable
+      register-visibility + TARMAC instruction tracing).
+
+3. RUN
+   make run TESTNAME=hello
+   -> before invoking the simulator, the Makefile:
+        - copies a CXDT.bin discovery image in (CXDT = debug/config image
+          used by the CPU model's boot/discovery mechanism)
+        - converts hello.bin into flash_main.ini via
+              od -v -A n -t x8 --width=16 hello.bin | awk '{print $2$1}'
+          i.e. a 16-byte-per-line hex dump, byte-order-swapped per word —
+          this is the format the CPU model's internal flash reads on startup
+          to preload code memory (so hello.bin ends up resident at address 0
+          before the simulated core comes out of reset).
+        - runs vsim in batch mode (`-c -do "run <time>; quit -f"`), piping
+          the console output through `tee mti_hello_run.log`.
+   -> Inside simulation, the CPU boots from address 0, jumps to Reset_Handler,
+      SystemInit()/system_CM3DS.c configures the clock, then main() runs.
+      hello.c calls UartStdOutInit() and prints via retarget.c's _write() ->
+      UartPutc() -> CMSDK UART0 DATA register. The testbench module
+      cmsdk_uart_capture_ard.v sniffs the UART TX line bit-by-bit and prints
+      captured characters/lines to the simulation console/log with a
+      timestamp. Sending byte 0x04 (EOT) on the UART, done in
+      UartEndSimulation(), is the signal cmsdk_uart_capture_ard.v uses to end
+      the simulation ($stop).
+
+4. PASS/FAIL DETERMINATION
+   `make runall` (and effectively the intent behind `make run`) determines
+   PASS/FAIL by grepping the run log for the literal string:
+       ** TEST PASSED **
+   (execution_tb/Makefile line ~376). The ORIGINAL hello.c printed exactly
+   this string after "Hello world". See FLAGS below — this string is
+   currently commented out in the working tree, which breaks this check.
+
+--------------------------------------------------------------------------------
+FLAGS — ISSUES FOUND IN UNCOMMITTED CHANGES SINCE LAST PUSH (origin/main @ b10ca31)
+--------------------------------------------------------------------------------
+Working tree is currently AHEAD of origin only in uncommitted changes (repo
+is "up to date" with origin/main at commit b10ca31 "Fix .gitignore and re-add
+CXDT.bin" — nothing has been pushed since, all of the below is local/
+uncommitted). In priority order:
+
+1. [HIGH] .gitignore was stripped from ~50 lines down to 3 lines (only
+   "*.qpg" remains). This removed ignores for *.o, *.log, *.hex, work/,
+   transcript, vsim.wlf, *.swp, CXDT.bin, flash_main.ini, run.tcl, etc.
+   Direct consequence, visible right now in `git status`: 19+ simulation/
+   build artifacts (mti_compile.log, vsim.wlf, work/, .swp swap files,
+   uart_stdout1.c/.h, image.hex, transcript, wlf* scratch files...) are now
+   untracked-but-visible and would get committed by any `git add -A` /
+   `git add .`. This looks like an accidental overwrite of .gitignore rather
+   than an intentional change — worth confirming before it's committed, since
+   the previous commit's message was literally "Fix .gitignore".
+
+2. [HIGH] testcodes/hello/hello.c no longer prints "** TEST PASSED **" (it's
+   commented out, replaced by experimental printf1(0,"abc0\n") /
+   printf1(1,"def1\n") calls for a dual-UART experiment). Confirmed by
+   actually reading the untracked mti_hello_run.log from a recent local run
+   (dated Jul 16, 2026, "Errors: 0, Warnings: 0", simulation completed
+   cleanly) — the log has no "** TEST PASSED **" line. As-is, the standard
+   automated pass/fail check (`make runall`, execution_tb/Makefile grep) will
+   report hello as FAILED even though the simulation itself ran fine. If the
+   dual-UART work is meant to replace hello's behavior, the test harness's
+   pass condition needs to be updated to match (or the marker string restored
+   alongside the new UART1 output) before this is considered "working".
+
+3. [MEDIUM] hello.c, uart_stdout.c/.h, retarget.c, and
+   cmsdk_uart_capture_ard.v all carry a mix of live experimental dual-UART
+   code (second UART "uart_stdout1.c/.h" — currently untracked/new files —
+   printf1(uart_sel, ...) routing to UART0 or UART1) AND large blocks of
+   commented-out dead code / stray debug prints (e.g. "$write("I am from
+   uart data recpetor")" [sic], "//you have changed it here" comments,
+   commented-out alternate UartPutc() implementations). Functionally this
+   compiles and the log shows it running, but it reads as mid-experiment
+   scratch work rather than a finished feature — worth a cleanup pass before
+   merging.
+
+4. [MEDIUM] The dual-UART hardware wiring itself (fpga_system.v, fpga_top.v,
+   m3ds_user_partition.v adding BAUDTICK0/BAUDTICK1 ports, tb_fpga_shield.v
+   adding a second cmsdk_uart_capture_ard instance with real baud-rate-
+   accurate clock generation replacing the previous "high-speed test mode"
+   shortcut, cmsdk_apb_uart.v with trivial whitespace changes) is coherently
+   wired end-to-end (verified: UART0BAUDTICK_o/UART1BAUDTICK_o -> BAUDTICK0/
+   BAUDTICK1 ports threaded through user_partition -> fpga_system -> fpga_top
+   -> tapped directly in tb_fpga_shield.v). This part looks like real,
+   intentional feature work, not accidental breakage — flagged only as
+   "not yet cleaned up," not "wrong."
+
+5. [LOW] 16 previously-tracked test .bin files (cxdt, default_slaves_tests,
+   designtest_m3, dhry, dualtimer_demo, gpio_driver_tests, gpio_tests,
+   interrupt_demo, memory_tests, rtx_demo, self_reset_demo, sleep_demo,
+   timer_driver_tests, timer_tests, uart_tests, watchdog_demo) are deleted
+   from the working tree (git shows them as "deleted", not yet staged).
+   Their precompiled/ backup copies remain intact for at least cxdt and dhry
+   (spot-checked). Since a prior commit (b748fab) already removed these
+   tests' .c sources "per team requirement," this deletion of their .bin
+   outputs may be a natural follow-on (e.g. from a `make clean_tests`) — but
+   it goes further than what that commit did, so it's worth explicitly
+   confirming this is wanted before committing, since it can't be
+   regenerated without the source.
+
+6. [LOW] New untracked m3designstart/software/common/validation/ directory
+   containing apb_mux_tests.c and uart_driver_tests.c (the same tests whose
+   sources were deliberately removed in b748fab). Not referenced by any
+   makefile — appears to be a personal/local reference copy. Flagging only
+   so it doesn't get committed by accident and re-introduce what b748fab
+   intentionally removed.
+
+None of the above are catastrophic — the simulation compiles and runs
+end-to-end right now — but items 1 and 2 will cause real problems (an
+accidentally-gitignore'd repo, and a false "FAILED" on the one test the team
+said matters) if committed/pushed as-is.
+
+--------------------------------------------------------------------------------
+FOCUS TEST: "hello"
+--------------------------------------------------------------------------------
+Canonical location: m3designstart/logical/testbench/testcodes/hello/
+  hello.c   - test source (currently mid-edit, see FLAGS #2/#3)
+  makefile  - per-test build (all_gcc target is what's actually used)
+  hello.bin/.hex/.lst - build outputs, currently tracked in git (unusual for
+              build artifacts, but appears intentional per team convention —
+              this repo commits the reference hello outputs)
+Run it with:
+  cd m3designstart/logical/testbench/testcodes/hello && make
+  cd ../../execution_tb && make compile SIMULATOR=mti
+  make run TESTNAME=hello SIMULATOR=mti
+Log lands in execution_tb/mti_hello_run.log; pass/fail is decided by grepping
+that log for "** TEST PASSED **" (currently broken, see FLAGS #2).
+
+================================================================================

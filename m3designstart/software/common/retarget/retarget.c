@@ -306,7 +306,9 @@ time_t time(time_t * timer)
 #include <stdio.h>
 #include <sys/stat.h>
 #include <stdarg.h>
+#include "uart_stdout1.h"
 extern unsigned char UartPutc(unsigned char my_ch);
+// extern unsigned char Uart1Putc(unsigned char my_ch);
 
 __attribute__ ((used))  int _write (int fd, char *ptr, int len)
 {
@@ -317,7 +319,7 @@ __attribute__ ((used))  int _write (int fd, char *ptr, int len)
   return len;
 }
 
-int printf1(const char *fmt, ...)
+int printf1(int uart_sel, const char *fmt, ...)
 {
     char buf[256];
     va_list args;
@@ -326,11 +328,18 @@ int printf1(const char *fmt, ...)
     int len = vsnprintf(buf, sizeof(buf), fmt, args);
     va_end(args);
 
-    for (int i = 0; i < len; i++)
-        Uart1Putc(buf[i]);
+    if (len < 0)
+        return len;
+
+    for (int i = 0; i < len && i < sizeof(buf); i++)
+    {
+        if (uart_sel == 0)
+            UartPutc(buf[i]);      // Send to UART0
+        else if (uart_sel == 1)
+            Uart1Putc(buf[i]);     // Send to UART1
+    }
 
     return len;
 }
-
 
 #endif

@@ -4,7 +4,7 @@
 void UartStdOutInit1(void)
 {
 
-		CM3DS_MPS2_UART1->BAUDDIV = 65 ;
+		CM3DS_MPS2_UART1->BAUDDIV = 63 ;
   CM3DS_MPS2_UART1->CTRL    = 0x01; 
 
 

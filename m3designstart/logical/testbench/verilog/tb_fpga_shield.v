@@ -39,7 +39,6 @@ module tb_fpga_shield;
     reg           clk25MHz;
     reg           clk12MHz;
     reg           clk8MHz;
-    reg clk_out;
     wire  [2:0]   osc;
     reg           n_rst;
     reg           n_por;
@@ -48,12 +47,12 @@ module tb_fpga_shield;
     wire  [1:0]   leds;
     wire  [1:0]   buttons;
     wire [51:0]   EXP;               // I/O ports
-    wire BAUDTICK0;   //BAUDTICK generated from UART0
-    wire BAUDTICK1;   //BAUDTICK generated from UART1
-    reg [3:0]BAUD_COUNTER;  //Counter for UART0
-    reg [3:0]BAUD_COUNTER1;  //Counter for UART1
-    reg BAUD_CLK;  //Baud clock input for BFM connected to UART0
-    reg BAUD_CLK1;  //Baud clock input for BFM connected to UART1
+    wire BAUDTICK0;
+    wire BAUDTICK1;
+    reg [3:0]BAUD_COUNTER;
+    reg [3:0]BAUD_COUNTER1;
+    reg BAUD_CLK;
+    reg BAUD_CLK1;
     // --------------------------------------------------------------------
     // Debug and Trace
     // --------------------------------------------------------------------
@@ -185,17 +184,18 @@ module tb_fpga_shield;
     wire          CLCD_T_CS;
     wire          CLCD_T_SCK;
 
-    wire [6:0] reg_ctrl;  //control register of UART0
-    wire [19:0] reg_baud_div;  //Baud divider of UART0
-    reg  BAUDTICK;  //BAUDTICK for BFM generated in TB TOP
+    wire [6:0] reg_ctrl;
+    wire [19:0] reg_baud_div;
+    reg  BAUDTICK;
     assign reg_ctrl=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_0.reg_ctrl;
     assign reg_baud_div=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_0.reg_baud_div;
 
 
-    wire [6:0] reg_ctrl1;   //control register of UART1
-    wire [19:0] reg_baud_div1;  //Baud divider of UART1
-    reg  BAUDTICK_1;   //BAUDTICK for BFM generated in TB TOP
+    wire [6:0] reg_ctrl1;
+    wire [19:0] reg_baud_div1;
+    reg  BAUDTICK_1;
     assign reg_ctrl1=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_1.reg_ctrl;
+    // assign reg_baud_div1=20'h41;
     assign reg_baud_div1=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_1.reg_baud_div;
 
     // --------------------------------------------------------------------
@@ -250,16 +250,6 @@ module tb_fpga_shield;
 
 
 
-//out of phase by 180 clock generation
-  
-  initial begin
-	  clk_out = 1'b1;
-	  #(PERIOD_25MHZ/2) ;
-	  forever #(PERIOD_25MHZ/2)
-	  	clk_out = ~ clk_out;
-  end
-
-
 
 
 
@@ -291,7 +281,7 @@ assign reload_i =
     );
 
 // Integer divider
-always @(posedge clk_out or negedge n_rst)
+always @(posedge clk25MHz or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_cntr_i <= 16'd0;
@@ -311,7 +301,7 @@ assign reload_f =
     reload_i;
 
 // Fraction divider
-always @(posedge clk_out or negedge n_rst)
+always @(posedge clk25MHz or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_cntr_f <= 4'hF;
@@ -325,17 +315,15 @@ begin
 end
 
 // Generate one-clk25MHz-wide BAUDTICK pulse
-always @(posedge clk_out or negedge n_rst)
+always @(posedge clk25MHz or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_tick <= 1'b0;
     else if (reload_i || reg_baud_tick)
         reg_baud_tick <= reload_i;
 end
- 
 
-
-always@(posedge clk_out or negedge n_rst) begin
+always@(posedge clk25MHz or negedge n_rst) begin
 	if(!n_rst)
 		BAUDTICK <= 1'b0;
 	else
@@ -345,7 +333,7 @@ end
 
 
 
-//BAUDCOUNTER LOGIC FOR BFM connected to UART0
+
 always @(negedge BAUDTICK or negedge n_rst)
 begin
     if (!n_rst) begin
@@ -367,12 +355,12 @@ end
 
 
 
-//Logic to restrict BAUD_CLK to be high for only cycle of BAUDTICK
+
 always@(posedge BAUDTICK or negedge n_rst) begin
 	if(!n_rst)
 		BAUD_CLK <= 1'b0;
 	else if(BAUD_COUNTER==4'd15) 
-		BAUD_CLK <= ~ BAUD_CLK;
+		BAUD_CLK = ~ BAUD_CLK;
 end
 
 
@@ -465,7 +453,7 @@ end
 
 
 
-//BAUDCOUNTER LOGIC FOR BFM connected to UART1
+
 always @(negedge BAUDTICK_1 or negedge n_rst)
 begin
     if (!n_rst) begin
@@ -487,13 +475,12 @@ end
 
 
 
-//Logic to restrict BAUD_CLK to be high for only cycle of BAUDTICK
 
 always@(posedge BAUDTICK_1 or negedge n_rst) begin
 	if(!n_rst)
 		BAUD_CLK1 <= 1'b0;
 	else if(BAUD_COUNTER1==4'd15) 
-		BAUD_CLK1 <= ~ BAUD_CLK1;
+		BAUD_CLK1 = ~ BAUD_CLK1;
 end
 
 
@@ -772,8 +759,6 @@ end
   );
 
 
-
-  // Another BFM added to monitor UART1
    cmsdk_uart_capture_ard u_cmsdk_uart_capture_ard1 (
   .RESETn              (n_rst),       // Power on reset
   .CLK                 (BAUD_CLK1),    // Clock (baud rate)

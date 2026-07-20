@@ -153,7 +153,7 @@ void UartStdOutInit(void)
 /*		CM3DS_MPS2_UART1->BAUDDIV = 65 ;
   CM3DS_MPS2_UART1->CTRL    = 0x01; */
 
-  CM3DS_MPS2_UART0->BAUDDIV = 43;
+  CM3DS_MPS2_UART0->BAUDDIV = 53;
   CM3DS_MPS2_UART0->CTRL    = 0x01; 
   // High speed test mode, TX only
 

@@ -26,14 +26,15 @@
 #include <stdio.h>
 #include "uart_stdout.h"
 #include "uart_stdout1.h"
+int printf1(int uart_sel, const char *fmt, ...);
 int main (void)
 {
   // UART init
   UartStdOutInit();
   UartStdOutInit1();
 
-  printf("abc0\n");
-  printf1("def1\n");
+  printf1(0,"abc0\n");
+  printf1(1,"def1\n");
  // printf("abc from UART0\n");
  // printf1("abc from UART1\n");
 
@@ -46,9 +47,9 @@ int main (void)
  // UartPutc(0x1B);
  // printf("abcdefghij"); 
   // End simulation
-  UartEndSimulation1();
+//  UartEndSimulation1();
   UartEndSimulation();
-  //UartEndSimulation1();
+  UartEndSimulation1();
 
   return 0;
 }

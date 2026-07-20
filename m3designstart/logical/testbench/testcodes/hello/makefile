@@ -28,148 +28,146 @@
 #  Configurations
 #
 CPU_PRODUCT = CORTEX_M3
- 
+
 # Shared software directory
 SOFTWARE_DIR = ../../../../software
 CMSIS_DIR    = $(SOFTWARE_DIR)/cmsis
 CORE_DIR     = $(CMSIS_DIR)/CMSIS/Include
- 
+
 DEVICE_DIR   = $(CMSIS_DIR)/Device/ARM/CM3DS
- 
+
 # Program file
 TESTNAME     = hello
- 
+
 # Endian Option
 COMPILE_BIGEND = 0
- 
+
 # Configuration
 USER_DEFINE    = -DCORTEX_M3
- 
+
 DEPS_LIST       = makefile
- 
+
 # Tool chain : ds5 / gcc / keil
 TOOL_CHAIN      = gcc
- 
+
 ifeq ($(TOOL_CHAIN),ds5)
   CPU_TYPE        = --cpu Cortex-M3
 endif
- 
+
 ifeq ($(TOOL_CHAIN),gcc)
   CPU_TYPE        = -mcpu=cortex-m3
 endif
- 
+
 # Startup code directory for DS-5
 ifeq ($(TOOL_CHAIN),ds5)
-STARTUP_DIR  = $(DEVICE_DIR)/Source/ARM
+ STARTUP_DIR  = $(DEVICE_DIR)/Source/ARM
 endif
- 
+
 # Startup code directory for gcc
 ifeq ($(TOOL_CHAIN),gcc)
-STARTUP_DIR  = $(DEVICE_DIR)/Source/GCC
+ STARTUP_DIR  = $(DEVICE_DIR)/Source/GCC
 endif
- 
+
 STARTUP_FILE = startup_CM3DS
 SYSTEM_FILE  = system_CM3DS
- 
+
 # ---------------------------------------------------------------------------------------
 # DS-5 options
- 
+
 # MicroLIB option
 COMPILE_MICROLIB = 0
- 
+
 ARM_CC_OPTIONS   = -c -O3 -g -Otime -I $(DEVICE_DIR)/Include  -I $(CORE_DIR) \
 		   -I $(SOFTWARE_DIR)/common/retarget $(USER_DEFINE)
 ARM_ASM_OPTIONS  = -g
 ARM_LINK_OPTIONS = "--keep=$(STARTUP_FILE).o(RESET)" "--first=$(STARTUP_FILE).o(RESET)" \
 		   --rw_base 0x20000000 --ro_base 0x00000000 --map
- 
+
 ifeq ($(COMPILE_BIGEND),1)
-# Big Endian
-ARM_CC_OPTIONS   += --bigend
-ARM_ASM_OPTIONS  += --bigend
-ARM_LINK_OPTIONS += --be8
+ # Big Endian
+ ARM_CC_OPTIONS   += --bigend
+ ARM_ASM_OPTIONS  += --bigend
+ ARM_LINK_OPTIONS += --be8
 endif
- 
+
 ifeq ($(COMPILE_MICROLIB),1)
-# MicroLIB
-ARM_CC_OPTIONS   += --library_type=microlib
-ARM_ASM_OPTIONS  += --library_type=microlib --pd "__MICROLIB SETA 1"
-ARM_LINK_OPTIONS += --library_type=microlib
+ # MicroLIB
+ ARM_CC_OPTIONS   += --library_type=microlib
+ ARM_ASM_OPTIONS  += --library_type=microlib --pd "__MICROLIB SETA 1"
+ ARM_LINK_OPTIONS += --library_type=microlib
 endif
- 
+
 # ---------------------------------------------------------------------------------------
 # gcc options
+
+GNG_CC      = arm-none-eabi-gcc
+GNU_OBJDUMP = arm-none-eabi-objdump
+GNU_OBJCOPY = arm-none-eabi-objcopy
+
+LINKER_SCRIPT_PATH = $(SOFTWARE_DIR)/common/scripts
+LINKER_SCRIPT = $(LINKER_SCRIPT_PATH)/cm3ds.ld
+
+GNU_CC_FLAGS = -g -O3 -mthumb $(CPU_TYPE) --specs=nosys.specs --specs=nano.specs \
+               -Wl,--gc-sections -D__STARTUP_CLEAR_BSS
+
+ifeq ($(COMPILE_BIGEND),1)
+ # Big Endian
+ GNU_CC_FLAGS   += -mbig-endian
+endif
+
+# ---------------------------------------------------------------------------------------
+all: all_$(TOOL_CHAIN)
+
+# ---------------------------------------------------------------------------------------
+# DS-5
+all_ds5 : $(TESTNAME).hex $(TESTNAME).bin $(TESTNAME).lst
+
+$(TESTNAME).o :  $(TESTNAME).c $(DEPS_LIST)
+	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
+
+$(SYSTEM_FILE).o : $(DEVICE_DIR)/Source/$(SYSTEM_FILE).c $(DEPS_LIST)
+	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
+
+retarget.o : $(SOFTWARE_DIR)/common/retarget/retarget.c $(DEPS_LIST)
+	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
+
+uart_stdout.o : $(SOFTWARE_DIR)/common/retarget/uart_stdout.c $(DEPS_LIST)
+	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
+
+$(STARTUP_FILE).o : $(STARTUP_DIR)/$(STARTUP_FILE).s $(DEPS_LIST)
+	armasm $(ARM_ASM_OPTIONS) $(CPU_TYPE) $< -o  $@
+
+$(TESTNAME).ELF : $(TESTNAME).o $(SYSTEM_FILE).o $(STARTUP_FILE).o retarget.o uart_stdout.o
+	armlink $(ARM_LINK_OPTIONS) $(TESTNAME).o $(SYSTEM_FILE).o  $(STARTUP_FILE).o retarget.o uart_stdout.o -o $@
+
+$(TESTNAME).hex : $(TESTNAME).ELF
+	fromelf --vhx --8x1 $< --output $@
+
+$(TESTNAME).bin : $(TESTNAME).ELF
+	fromelf --bin -o $@ $<
+
+
+$(TESTNAME).lst : $(TESTNAME).ELF
+	fromelf -c -d -e -s $< --output $@
+
+# ---------------------------------------------------------------------------------------
+# gcc
+all_gcc:
+	# gcc options
  
 GNG_CC      = arm-none-eabi-gcc
 GNU_OBJDUMP = arm-none-eabi-objdump
 GNU_OBJCOPY = arm-none-eabi-objcopy
  
 LINKER_SCRIPT_PATH = $(SOFTWARE_DIR)/common/scripts
-LINKER_SCRIPT      = $(LINKER_SCRIPT_PATH)/cm3ds.ld
-LINKER_TEMPLATE    = $(LINKER_SCRIPT_PATH)/cm3ds.ld.in
+LINKER_SCRIPT = $(LINKER_SCRIPT_PATH)/cm3ds.ld
  
-RAM_ORIGIN ?= 0x20000000
-RAM_LENGTH ?= 0xFC00
- 
-FLASH_ORIGIN ?= 0x00000000
-FLASH_LENGTH ?= 0x10000
- 
-GNU_CC_FLAGS = -g -Os -mthumb $(CPU_TYPE) --specs=nosys.specs --specs=nano.specs \
-               -Wl,--gc-sections -D__STARTUP_CLEAR_BSS
- 
-ifeq ($(COMPILE_BIGEND),1)
-# Big Endian
-GNU_CC_FLAGS   += -mbig-endian
-endif
- 
- 
-# ---------------------------------------------------------------------------------------
-all: all_$(TOOL_CHAIN)
- 
-# ---------------------------------------------------------------------------------------
-# Generate linker script from template
-$(LINKER_SCRIPT): $(LINKER_TEMPLATE)
-	sed \
-	-e 's/@FLASH_ORIGIN@/$(FLASH_ORIGIN)/g' \
-	-e 's/@FLASH_LENGTH@/$(FLASH_LENGTH)/g' \
-	-e 's/@RAM_ORIGIN@/$(RAM_ORIGIN)/g' \
-	-e 's/@RAM_LENGTH@/$(RAM_LENGTH)/g' \
-	$< > $@
-# DS-5
-all_ds5 : $(TESTNAME).hex $(TESTNAME).bin $(TESTNAME).lst
- 
-$(TESTNAME).o :  $(TESTNAME).c $(DEPS_LIST)
-	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
- 
-$(SYSTEM_FILE).o : $(DEVICE_DIR)/Source/$(SYSTEM_FILE).c $(DEPS_LIST)
-	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
- 
-retarget.o : $(SOFTWARE_DIR)/common/retarget/retarget.c $(DEPS_LIST)
-	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
- 
-uart_stdout.o : $(SOFTWARE_DIR)/common/retarget/uart_stdout.c $(DEPS_LIST)
-	armcc $(ARM_CC_OPTIONS) $(CPU_TYPE) $< -o  $@
- 
-$(STARTUP_FILE).o : $(STARTUP_DIR)/$(STARTUP_FILE).s $(DEPS_LIST)
-	armasm $(ARM_ASM_OPTIONS) $(CPU_TYPE) $< -o  $@
- 
-$(TESTNAME).ELF : $(TESTNAME).o $(SYSTEM_FILE).o $(STARTUP_FILE).o retarget.o uart_stdout.o
-	armlink $(ARM_LINK_OPTIONS) $(TESTNAME).o $(SYSTEM_FILE).o  $(STARTUP_FILE).o retarget.o uart_stdout.o -o $@
- 
-$(TESTNAME).hex : $(TESTNAME).ELF
-	fromelf --vhx --8x1 $< --output $@
- 
-$(TESTNAME).bin : $(TESTNAME).ELF
-	fromelf --bin -o $@ $<
- 
- 
-$(TESTNAME).lst : $(TESTNAME).ELF
-	fromelf -c -d -e -s $< --output $@
- 
-# ---------------------------------------------------------------------------------------
-# gcc
-all_gcc: $(LINKER_SCRIPT)	
-	        $(GNG_CC) $(GNU_CC_FLAGS) $(STARTUP_DIR)/$(STARTUP_FILE).s \
+FLASH_ORIGIN ?=0X0
+FLASH_LENGTH ?=0X10000
+RAM_ORIGIN ?=0x20000000
+RAM_LENGTH ?=0xFC00   
+all_gcc:
+	$(GNG_CC) $(GNU_CC_FLAGS) $(STARTUP_DIR)/$(STARTUP_FILE).s \
 		$(TESTNAME).c \
 		$(SOFTWARE_DIR)/common/retarget/retarget.c \
 		$(SOFTWARE_DIR)/common/retarget/uart_stdout.c \
@@ -180,34 +178,38 @@ all_gcc: $(LINKER_SCRIPT)
 		-L $(LINKER_SCRIPT_PATH) \
 		-D__STACK_SIZE=0x200 \
 		-D__HEAP_SIZE=0x1000 \
-		$(USER_DEFINE) -T $(LINKER_SCRIPT) -o $(TESTNAME).o
+		$(USER_DEFINE)	-Wl,--defsym=FLASH_ORIGIN=$(FLASH_ORIGIN) \
+    				-Wl,--defsym=FLASH_LENGTH=$(FLASH_LENGTH) \
+    				-Wl,--defsym=RAM_ORIGIN=$(RAM_ORIGIN) \
+				-Wl,--defsym=RAM_LENGTH=$(RAM_LENGTH) \
+				-T $(LINKER_SCRIPT) -o $(TESTNAME).o
 	# Generate disassembly code
 	$(GNU_OBJDUMP) -S $(TESTNAME).o > $(TESTNAME).lst
 	# Generate binary file
 	$(GNU_OBJCOPY) -S $(TESTNAME).o -O binary $(TESTNAME).bin
 	# Generate hex file
 	$(GNU_OBJCOPY) -S $(TESTNAME).o -O verilog $(TESTNAME).hex
- 
+
 # Note:
 # If the version of object copy you are using does not support verilog hex file output,
 # you can generate the hex file from binary file using the following command
 #       od -v -A n -t x1 --width=1  $(TESTNAME).bin > $(TESTNAME).hex
- 
- 
+
+
 # ---------------------------------------------------------------------------------------
 # Keil MDK
- 
+
 all_keil:
 	@echo "Please ensure all files from Keil MDK test compilation are in the <test> directory before pressing ENTER"
 	@read dummy
- 
+
 # ---------------------------------------------------------------------------------------
 # Binary
- 
+
 all_bin: $(TESTNAME).bin
 	# Generate hex file from binary
 	od -v -A n -t x1 --width=1  $(TESTNAME).bin > $(TESTNAME).hex
- 
+
 # ---------------------------------------------------------------------------------------
 # Clean
 clean :
@@ -238,4 +240,3 @@ clean :
 	@rm -rf *.sct
 	@rm -rf *.__i
 	@rm -rf *._ia
-	@rm -f $(LINKER_SCRIPT)
