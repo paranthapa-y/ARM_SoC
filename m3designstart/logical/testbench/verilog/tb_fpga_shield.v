@@ -39,6 +39,7 @@ module tb_fpga_shield;
     reg           clk25MHz;
     reg           clk12MHz;
     reg           clk8MHz;
+    reg clk_out;
     wire  [2:0]   osc;
     reg           n_rst;
     reg           n_por;
@@ -247,6 +248,12 @@ module tb_fpga_shield;
   always #(PERIOD_12MHZ/2)  clk12MHz  = ~clk12MHz;
   always #(PERIOD_8MHZ/2)   clk8MHz   = ~clk8MHz;
 
+  initial begin
+	  clk_out = 1'b1;
+	  #(PERIOD_25MHZ/2) ;
+	  forever #(PERIOD_25MHZ/2)
+	  	clk_out = ~ clk_out;
+  end
 
 
 
@@ -280,7 +287,7 @@ assign reload_i =
     );
 
 // Integer divider
-always @(posedge clk25MHz or negedge n_rst)
+always @(posedge clk_out or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_cntr_i <= 16'd0;
@@ -300,7 +307,7 @@ assign reload_f =
     reload_i;
 
 // Fraction divider
-always @(posedge clk25MHz or negedge n_rst)
+always @(posedge clk_out or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_cntr_f <= 4'hF;
@@ -314,7 +321,7 @@ begin
 end
 
 // Generate one-clk25MHz-wide BAUDTICK pulse
-always @(posedge clk25MHz or negedge n_rst)
+always @(posedge clk_out or negedge n_rst)
 begin
     if (!n_rst)
         reg_baud_tick <= 1'b0;
@@ -322,7 +329,7 @@ begin
         reg_baud_tick <= reload_i;
 end
 
-always@(posedge clk25MHz or negedge n_rst) begin
+always@(posedge clk_out or negedge n_rst) begin
 	if(!n_rst)
 		BAUDTICK <= 1'b0;
 	else

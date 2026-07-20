@@ -193,7 +193,7 @@ module cmsdk_uart_capture_ard (
 
      //   $write("\n");
     end
-	  $display("Received a reset condition from uart %d at time %t", UART, $time);
+//	  $display("Received a reset condition from uart %d at time %t", UART, $time);
           nxt_end_simulation <= 1'b1;
 	 end
         else if ((rx_shift_reg[8:1]==8'h0D)|(rx_shift_reg[8:1]==8'h0A))
