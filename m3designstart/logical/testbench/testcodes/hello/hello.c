@@ -32,8 +32,8 @@ int main (void)
   UartStdOutInit();
   UartStdOutInit1();
 
-  printf("abc0\n");
-  printf1("def1\n");
+  printf1(0,"abc0\n");
+  printf1(1,"def1\n");
  // printf("abc from UART0\n");
  // printf1("abc from UART1\n");
 
