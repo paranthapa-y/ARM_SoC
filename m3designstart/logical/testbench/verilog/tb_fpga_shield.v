@@ -366,7 +366,7 @@ always@(posedge BAUDTICK or negedge n_rst) begin
 	if(!n_rst)
 		BAUD_CLK <= 1'b0;
 	else if(BAUD_COUNTER==4'd15) 
-		BAUD_CLK = ~ BAUD_CLK;
+		BAUD_CLK <= ~ BAUD_CLK;
 end
 
 
@@ -486,7 +486,7 @@ always@(posedge BAUDTICK_1 or negedge n_rst) begin
 	if(!n_rst)
 		BAUD_CLK1 <= 1'b0;
 	else if(BAUD_COUNTER1==4'd15) 
-		BAUD_CLK1 = ~ BAUD_CLK1;
+		BAUD_CLK1 <= ~ BAUD_CLK1;
 end
 
 
