@@ -195,7 +195,7 @@ module tb_fpga_shield;
     wire [19:0] reg_baud_div1;
     reg  BAUDTICK_1;
     assign reg_ctrl1=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_1.reg_ctrl;
-    assign reg_baud_div1=20'h41;
+    assign reg_baud_div1=u_fpga_top.u_fpga_system.u_user_partition.u_mps2_peripherals_wrapper.u_beetle_peripherals_fpga_subsystem.u_cmsdk_apb_uart_1.reg_baud_div;
 
     // --------------------------------------------------------------------
     // FPGA config
