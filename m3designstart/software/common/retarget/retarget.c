@@ -306,7 +306,9 @@ time_t time(time_t * timer)
 #include <stdio.h>
 #include <sys/stat.h>
 #include <stdarg.h>
+#include "uart_stdout1.h"
 extern unsigned char UartPutc(unsigned char my_ch);
+// extern unsigned char Uart1Putc(unsigned char my_ch);
 
 __attribute__ ((used))  int _write (int fd, char *ptr, int len)
 {

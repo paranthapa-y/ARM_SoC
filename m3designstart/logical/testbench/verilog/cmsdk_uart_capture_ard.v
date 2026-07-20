@@ -183,9 +183,6 @@ module cmsdk_uart_capture_ard (
         tube_string[string_length] = 8'h0A;
       //  $write("%t UART: ", $time);
 
-
-      //logic to empty the buffer at the end when \n is not used inside
-      //printf()
         for (i = 0; i <= string_length; i = i + 1)
         begin
             text_char = tube_string[i];
@@ -196,7 +193,7 @@ module cmsdk_uart_capture_ard (
 
      //   $write("\n");
     end
-//	  $display("Received a reset condition from uart %d at time %t", UART, $time);
+	  $display("Received a reset condition from uart %d at time %t", UART, $time);
           nxt_end_simulation <= 1'b1;
 	 end
         else if ((rx_shift_reg[8:1]==8'h0D)|(rx_shift_reg[8:1]==8'h0A))
@@ -232,9 +229,6 @@ module cmsdk_uart_capture_ard (
         else
           begin
           tube_string[string_length] = rx_shift_reg[8:1];
-
-	  //Logic to print timestamp for each character at the same they were
-	  //received
 	  $write("%t TIME: ",$time);
 	  $write("%s",rx_shift_reg[8:1]);
 	  $write("\n");

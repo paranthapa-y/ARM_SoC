@@ -2,70 +2,69 @@ Reading pref.tcl
 
 # 2021.2_1
 
-vsim -quiet -assertdebug -voptargs="+acc=blnr" tb_fpga_shield -64 -c -do "radix hex; run 40000us ;quit -f" 
-Start time: 16:07:16 on Jul 14,2026
-** Note: (vsim-8009) Loading existing optimized design _opt2
-//  Questa Sim-64
-//  Version 2021.2_1 linux_x86_64 May 15 2021
-//
-//  Copyright 1991-2021 Mentor Graphics Corporation
-//  All Rights Reserved.
-//
-//  QuestaSim and its associated documentation contain trade
-//  secrets and commercial or financial information that are the property of
-//  Mentor Graphics Corporation and are privileged, confidential,
-//  and exempt from disclosure under the Freedom of Information Act,
-//  5 U.S.C. Section 552. Furthermore, this information
-//  is prohibited from disclosure under the Trade Secrets Act,
-//  18 U.S.C. Section 1905.
-//
-radix hex
-hexadecimal
- run 40000us 
-Loading CXDT from parameter IMAGENAME (./CXDT.bin)
-*
-* Max. address:                        001ffff
-* Begin of full protection address:    0000000
-* Begin of half protection address:    0010000
-* Begin of quarter protection address: 0018000
-*
-===========================================================
-
- nvSRAM Power UP 
-*
-* Max. address:                        001ffff
-* Begin of full protection address:    0000000
-* Begin of half protection address:    0010000
-* Begin of quarter protection address: 0018000
-*
-===========================================================
-
- nvSRAM Power UP 
-*
-* Max. address:                        001ffff
-* Begin of full protection address:    0000000
-* Begin of half protection address:    0010000
-* Begin of quarter protection address: 0018000
-*
-===========================================================
-
- nvSRAM Power UP 
-243880.000ns TIME: a
-261080.000ns TIME: b
-278280.000ns TIME: c
-295480.000ns TIME: 0
-312680.000ns UART: abc0
-322240.000ns TIME: d
-348240.000ns TIME: e
-374240.000ns TIME: f
-400240.000ns TIME: 1
-426240.000ns UART: def1
-Received a reset condition from uart 1 at time 452240.000ns
-457440.000ns UART: Test Ended
-** Note: $stop    : ../verilog/cmsdk_uart_capture_ard.v(273)
-   Time: 457440 ns  Iteration: 3  Instance: /tb_fpga_shield/u_cmsdk_uart_capture_ard1
-Break in NamedBeginStat p_sim_end at ../verilog/cmsdk_uart_capture_ard.v line 273
-Stopped at ../verilog/cmsdk_uart_capture_ard.v line 273
-quit -f
-End time: 16:07:21 on Jul 14,2026, Elapsed time: 0:00:05
-Errors: 0, Warnings: 0
+# vsim -quiet -assertdebug -voptargs="+acc=blnr" tb_fpga_shield -64 -c -do "radix hex; run 40000us ;quit -f" 
+# Start time: 12:49:25 on Jul 20,2026
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# //  Questa Sim-64
+# //  Version 2021.2_1 linux_x86_64 May 15 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# radix hex
+# hexadecimal
+#  run 40000us 
+# Loading CXDT from parameter IMAGENAME (./CXDT.bin)
+# *
+# * Max. address:                        001ffff
+# * Begin of full protection address:    0000000
+# * Begin of half protection address:    0010000
+# * Begin of quarter protection address: 0018000
+# *
+# ===========================================================
+# 
+#  nvSRAM Power UP 
+# *
+# * Max. address:                        001ffff
+# * Begin of full protection address:    0000000
+# * Begin of half protection address:    0010000
+# * Begin of quarter protection address: 0018000
+# *
+# ===========================================================
+# 
+#  nvSRAM Power UP 
+# *
+# * Max. address:                        001ffff
+# * Begin of full protection address:    0000000
+# * Begin of half protection address:    0010000
+# * Begin of quarter protection address: 0018000
+# *
+# ===========================================================
+# 
+#  nvSRAM Power UP 
+# 76320.000ns TIME: a
+# 97520.000ns TIME: b
+# 118720.000ns TIME: c
+# 139920.000ns TIME: 0
+# 158840.000ns TIME: d
+# 161120.000ns UART: abc0
+# 184040.000ns TIME: e
+# 209240.000ns TIME: f
+# Received a reset condition from uart 0 at time 233200.000ns
+# 234440.000ns TIME: 1
+# 237440.000ns UART: Test Ended
+# ** Note: $stop    : ../verilog/cmsdk_uart_capture_ard.v(273)
+#    Time: 237440 ns  Iteration: 3  Instance: /tb_fpga_shield/u_cmsdk_uart_capture_ard
+# Break in NamedBeginStat p_sim_end at ../verilog/cmsdk_uart_capture_ard.v line 273
+# Stopped at ../verilog/cmsdk_uart_capture_ard.v line 273
+# quit -f
+# End time: 12:49:28 on Jul 20,2026, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 0
