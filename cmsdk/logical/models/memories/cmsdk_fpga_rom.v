@@ -65,7 +65,6 @@ localparam AWT = ((1<<(AW-2))-1);
   // Infer Block RAM - syntax is very specific.
   always @ (posedge CLK)
     begin
-      $display("ADDR=%h, WDATA=%h, WREN=%b just checking if i am being used or not", ADDR, WDATA, WREN);
       if (WREN[0])
         BRAM0[ADDR] <= WDATA[7:0];
       if (WREN[1])

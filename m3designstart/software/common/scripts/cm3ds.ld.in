@@ -33,11 +33,11 @@ INCLUDE "lib-nosys.ld"
  
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000,
-             LENGTH = 0x10000
+  FLASH (rx) : ORIGIN = @FLASH_ORIGIN@,
+             LENGTH = @FLASH_LENGTH@
  
-  RAM (rwx)  : ORIGIN = 0x20000000,
-               LENGTH = 0xFC00
+  RAM (rwx)  : ORIGIN = @RAM_ORIGIN@,
+               LENGTH = @RAM_LENGTH@
 }
  
 INCLUDE "sections-nokeep.ld"

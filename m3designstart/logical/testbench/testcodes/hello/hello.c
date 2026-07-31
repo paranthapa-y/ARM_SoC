@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include "uart_stdout.h"
 #include "uart_stdout1.h"
-int printf1(int uart_sel, const char *fmt, ...);
 int main (void)
 {
   // UART init
@@ -47,9 +46,9 @@ int main (void)
  // UartPutc(0x1B);
  // printf("abcdefghij"); 
   // End simulation
-//  UartEndSimulation1();
-  UartEndSimulation();
   UartEndSimulation1();
+  UartEndSimulation();
+  //UartEndSimulation1();
 
   return 0;
 }
