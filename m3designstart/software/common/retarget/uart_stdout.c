@@ -49,7 +49,7 @@ void UartStdOutInit(void)
 {
     CM3DS_MPS2_UART1->BAUDDIV = SystemCoreClock / 38400;  // 38400 at 25MHz
 
-    CM3DS_MPS2_UART1->CTRL = ((1ul <<  0) |              /* TX enable */
+    CM3DS_MPS2_UART1->CTRL.word = ((1ul <<  0) |              /* TX enable */
                               (1ul <<  1) );             /* RX enable */
     return;
 }
@@ -59,12 +59,12 @@ unsigned char UartPutc(unsigned char my_ch)
 {
   unsigned char * text = (unsigned char *)CM3DS_MPS2_VGACON_BASE;
 
-  while ((CM3DS_MPS2_UART1->STATE & 1)); // Wait if Transmit Holding register is full
+  while ((CM3DS_MPS2_UART1->STATE.word & 1)); // Wait if Transmit Holding register is full
 
   if (my_ch == '\n')
   {
     CM3DS_MPS2_UART1->DATA  = '\r';
-    while ((CM3DS_MPS2_UART1->STATE & 1)); // Wait if Transmit Holding register is full
+    while ((CM3DS_MPS2_UART1->STATE.word & 1)); // Wait if Transmit Holding register is full
   }
 
   CM3DS_MPS2_UART1->DATA = my_ch; // write to transmit holding register
@@ -79,7 +79,7 @@ unsigned char UartGetc(void)
 {
   unsigned char my_ch;
 
-  while ((CM3DS_MPS2_UART1->STATE & 2)==0) // Wait if Receive Holding register is empty
+  while ((CM3DS_MPS2_UART1->STATE.word & 2)==0) // Wait if Receive Holding register is empty
   {
       CM3DS_MPS2_FPGASYS->LEDS = ((CM3DS_MPS2_FPGASYS->CNT100HZ / 100) & 0x3);
   }
@@ -154,7 +154,7 @@ void UartStdOutInit(void)
   CM3DS_MPS2_UART1->CTRL    = 0x01; */
 
   CM3DS_MPS2_UART0->BAUDDIV = 43;
-  CM3DS_MPS2_UART0->CTRL    = 0x01; 
+  CM3DS_MPS2_UART0->CTRL.word    = 0x25; 
   // High speed test mode, TX only
 
 
@@ -163,7 +163,7 @@ void UartStdOutInit(void)
 // Output a character
 unsigned char UartPutc(unsigned char my_ch)
 {
-  while ((CM3DS_MPS2_UART0->STATE & 1)); // Wait if Transmit Holding register is full
+  while ((CM3DS_MPS2_UART0->STATE.bit.tx_buff_full)); // Wait if Transmit Holding register is full
   CM3DS_MPS2_UART0->DATA = my_ch; // write to transmit holding register
 	
   return (my_ch);
@@ -190,7 +190,7 @@ unsigned char UartPutc(unsigned char my_ch)
 // Get a character
 unsigned char UartGetc(void)
 {
-  while ((CM3DS_MPS2_UART0->STATE & 2)==0); // Wait if Receive Holding register is empty
+  while ((CM3DS_MPS2_UART0->STATE.bit.rx_buff_full)==0); // Wait if Receive Holding register is empty
   return (CM3DS_MPS2_UART0->DATA);
 }
 

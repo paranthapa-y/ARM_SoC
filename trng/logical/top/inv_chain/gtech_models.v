@@ -4,6 +4,7 @@
 //
 //The entire notice above must be reproduced on all copies of this file and copies of this file may only be made by a person if such person is permitted to do so under the terms of a subsisting license agreementfrom ARM Limited or its affiliates.
 // synopsys translate_off
+`timescale 1ns/10ps
 module DX_GTECH_AND2(A,B,Z);
 input  A,B;
 output  Z;

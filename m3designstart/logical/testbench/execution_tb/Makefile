@@ -116,8 +116,12 @@ ifeq ($(strip $(FSDB)), yes)
   endif
 endif
 MTI_DO_RUN_SCRIPT     := "radix hex; run ${MAX_SIMULATION_TIME};quit -f"
-MTI_VLOG_COMPILE_OPTS := +define+MTI_BUILD +acc=blnr -noincr
-MTI_VLOG_RUN_OPTS     := -quiet -assertdebug -voptargs="+acc=blnr" ${MTI_NOVAS_OPTS} ${VLOG_TESTBENCH_NAME}
+MTI_VLOG_COMPILE_OPTS := +define+MTI_BUILD +acc=blnr -noincr -timescale=1ns/10ps
+MTI_VLOG_RUN_OPTS := -quiet -assertdebug \
+                     -sv_lib /home/user/Downloads/questasim/linux_x86_64/uvm_dpi \
+                     -voptargs="+acc=blnr" \
+                     ${MTI_NOVAS_OPTS} \
+                     ${VLOG_TESTBENCH_NAME}
 MTI_CM_COMPILE_OPTS   := ${MTI_VLOG_COMPILE_OPTS} -ccflags ${CFLAGS}
 MTI_CM_RUN_OPTS       := ${MTI_VLOG_RUN_OPTS}
 
@@ -365,8 +369,18 @@ endif
 	touch image.hex
 	@echo " >> Running testbench with $(SIMULATOR) and DSM=$(DSM)"
 	$(RUN_LINE)
+################################################################################
+# Decode processor instruction log
+################################################################################
 
-# run all tests
+log:
+ifeq ($(TESTNAME),)
+	$(error Please specify TESTNAME on the make command line)
+endif
+	@echo "Generating disassembly for $(TESTNAME)..."
+	arm-none-eabi-objdump -d ../testcodes/$(TESTNAME)/$(TESTNAME).o > $(TESTNAME).dis
+	@echo "Decoding tracker log..."
+	python3 log_arm.py $(TESTNAME)
 runall:
 	@(for test in $(TEST_LIST) ; do \
 	  make run TESTNAME=$$test; \
@@ -420,7 +434,8 @@ clean:
 	@rm -rf dump.fsdb
 	@rm -rf dump.vcd
 	@rm -rf verdiLog
-
+	@rm -f *.txt
+	@rm -f *.dis
 # Clean all test code and compile testbench
 clean_all: clean_tests clean
 

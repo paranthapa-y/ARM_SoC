@@ -235,9 +235,9 @@ module cmsdk_uart_capture_ard (
 
 	  //Logic to print timestamp for each character at the same they were
 	  //received
-	  $write("%t TIME: ",$time);
+/*	  $write("%t TIME: ",$time);
 	  $write("%s",rx_shift_reg[8:1]);
-	  $write("\n");
+	  $write("\n"); */
           string_length = string_length + 1;
           if (string_length >79) // line too long, display and clear buffer
             begin

@@ -4,8 +4,8 @@
 void UartStdOutInit1(void)
 {
 
-		CM3DS_MPS2_UART1->BAUDDIV = 65 ;
-  CM3DS_MPS2_UART1->CTRL    = 0x01; 
+		CM3DS_MPS2_UART1->BAUDDIV = 53 ;
+  CM3DS_MPS2_UART1->CTRL.word    = 0x25; 
 
 
   return;
@@ -14,7 +14,7 @@ void UartStdOutInit1(void)
 
 unsigned char Uart1Putc(unsigned char my_ch)
 {
-	while ((CM3DS_MPS2_UART1->STATE & 1)); // Wait if Transmit Holding register is full
+	while ((CM3DS_MPS2_UART1->STATE.bit.tx_buff_full)); // Wait if Transmit Holding register is full
   CM3DS_MPS2_UART1->DATA = my_ch; // write to transmit holding register
 }
 
@@ -33,7 +33,7 @@ unsigned char UartPutc(unsigned char my_ch)
 // Get a character
 unsigned char UartGet1c(void)
 {
-  while ((CM3DS_MPS2_UART1->STATE & 2)==0); // Wait if Receive Holding register is empty
+  while ((CM3DS_MPS2_UART1->STATE.bit.rx_buff_full)==0); // Wait if Receive Holding register is empty
   return (CM3DS_MPS2_UART1->DATA);
 }
 

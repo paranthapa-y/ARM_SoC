@@ -25,11 +25,14 @@
 +define+SIMULATION=1
 
 // ============= Verilog library extensions ===========
-+libext+.v+.vlib
++libext+.v+.sv+.vlib
++incdir+/home/user/Downloads/questasim/verilog_src/uvm-1.2/src
+/home/user/Downloads/questasim/verilog_src/uvm-1.2/src/uvm_pkg.sv
 
+../uvm/pkg/ahb_pkg.sv
 // ================= Top level file ===================
-../verilog/tb_fpga_shield.v
-
+../verilog/tb_fpga_shield.sv
+../verilog/iot_tracker.v
 // ================= Testbench components =============
 -y ../verilog/
 +incdir+../verilog/
@@ -88,6 +91,7 @@
 -y ../cxdt/verilog
 
 // TRNG
+../../../../trng/logical/top/inv_chain/gtech_models.v
 -y ../../../../trng/logical
 -y ../../../../trng/logical/top
 -y ../../../../trng/logical/top/inv_chain
@@ -111,4 +115,14 @@
 +incdir+../../../../cmsdk/logical/cmsdk_apb_dualtimers/verilog
 +incdir+../../../../cmsdk/logical/cmsdk_apb_watchdog/verilog
 +incdir+../../../../trng/logical/inc
+
+
+
+
+../uvm/rtl/ahb_if.sv
+../uvm/rtl/ahb_bind.sv
+../uvm/rtl/apb_if.sv
+../uvm/rtl/apb_bind.sv
+../uvm/rtl/axi_if.sv
+../uvm/rtl/axi_bind.sv
 
