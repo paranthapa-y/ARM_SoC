@@ -950,7 +950,8 @@ end
     .ZZ    (SSRAM3_ZZ),
     .nFT   (1'b0)
   );
-
+apb_if apb_i( .PCLK(HCLK), .PRESETn(SYSRESETn));
+axi_if axi_i ( .ACLK(ACLK), .ARESETn(SYSRESETn));
   //-----------------------------------------
   // Config SPI
   //-----------------------------------------
@@ -1028,24 +1029,9 @@ end
                     };
 
 
-apb_if apb_i( .PCLK(HCLK), .PRESETn(SYSRESETn));
-axi_if axi_i ( .ACLK(ACLK), .ARESETn(SYSRESETn));
 
-	icode_tracker u_icode_tracker
-(
-    .HCLK      (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.CPU0HCLK),
-    .HRESETn   (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.CPU0SYSRESETn),
 
-    .HADDRI    (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.haddri),
-    .HTRANSI   (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.htransi),
-    .HSIZEI    (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hsizei),
-    .HBURSTI   (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hbursti),
-    .HPROTI    (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hproti),
 
-    .HREADYI   (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hreadyi),
-    .HRDATAI   (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hrdatai),
-    .HRESPI    (u_fpga_top.u_fpga_system.u_user_partition.u_iot_top.hrespi)
-);
 
 
 
