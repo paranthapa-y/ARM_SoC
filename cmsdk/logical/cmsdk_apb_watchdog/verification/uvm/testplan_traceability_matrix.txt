@@ -1,0 +1,120 @@
+CMSDK APB Watchdog Testplan Traceability Matrix
+==============================================
+Date: 2026-08-31
+
+Source workbook:
+- verification/cmsdk_apb_watchdog_testplan_doc_only.xlsx
+
+Summary:
+- Total planned entries: 39
+- Clear and implementable now: 9
+- Already implemented as grouped scenario tests: 5
+- Left intentionally unimplemented because the TRM/spec is ambiguous or incomplete: 25
+
+Clear and implementable now
+---------------------------
+These are test-plan entries that are directly described by the TRM and can be coded reliably.
+
+WDOG_RST_01  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_02  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_03  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_04  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_05  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_06  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_RST_07  -> implemented via wdog_reset_seq / wdog_reset_test
+WDOG_VAL_01 -> implemented via wdog_value_seq / wdog_value_test
+WDOG_VAL_03 -> implemented via wdog_value_seq / wdog_value_test
+WDOG_INT_01 -> implemented via wdog_interrupt_status_seq / wdog_interrupt_status_test
+WDOG_INT_02 -> implemented via wdog_interrupt_status_seq / wdog_interrupt_status_test
+WDOG_INT_03 -> implemented via wdog_interrupt_status_seq / wdog_interrupt_status_test
+
+Also covered by grouped tests already created:
+WDOG_LOAD_01 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_LOAD_02 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_LOAD_04 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_CTRL_01 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_CTRL_02 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_CTRL_03 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_CTRL_04 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_CTRL_05 -> wdog_load_control_seq / wdog_load_control_test
+WDOG_FLOW_01 -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_FLOW_02 -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_FLOW_03 -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_FLOW_04 -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_CLR_01  -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_CLR_03  -> wdog_interrupt_flow_seq / wdog_interrupt_flow_test
+WDOG_LOCK_01 -> wdog_lock_seq / wdog_lock_test
+WDOG_LOCK_02 -> wdog_lock_seq / wdog_lock_test
+WDOG_LOCK_03 -> wdog_lock_seq / wdog_lock_test
+WDOG_LOCK_06 -> wdog_lock_seq / wdog_lock_test
+
+Ambiguous / intentionally left out
+---------------------------------
+These are left unimplemented because the plan or TRM does not give enough clarity for a deterministic pass/fail definition.
+
+WDOG_REG_01  - Unmapped APB region behavior is inferred from general APB examples, not explicitly stated for this block.
+WDOG_LOAD_03 - Behavior of WDOGLOAD = 0 is not specified; the TRM says minimum valid value is 1 but does not define the 0 case.
+WDOG_ITM_01  - Integration test mode behavior is partly documented but not fully pinned down.
+WDOG_ITM_02  - Exit/reversion behavior when WDOGITCR clears is not explicitly stated.
+WDOG_ITM_04  - Not defined clearly enough for a deterministic implementation.
+WDOG_ITM_05  - Not defined clearly enough for a deterministic implementation.
+WDOG_SIG_01  - Signal behavior is partly document-based and likely needs waveform cross-checking with the spec.
+WDOG_SIG_02  - Signal behavior is partly document-based and likely needs waveform cross-checking with the spec.
+
+Full planned IDs in workbook
+----------------------------
+WDOG_RST_01
+WDOG_RST_02
+WDOG_RST_03
+WDOG_RST_04
+WDOG_RST_05
+WDOG_RST_06
+WDOG_RST_07
+WDOG_REG_01
+WDOG_LOAD_01
+WDOG_LOAD_04
+WDOG_LOAD_02
+WDOG_LOAD_03
+WDOG_VAL_01
+WDOG_VAL_03
+WDOG_CTRL_01
+WDOG_CTRL_02
+WDOG_CTRL_03
+WDOG_CTRL_04
+WDOG_CTRL_05
+WDOG_FLOW_01
+WDOG_FLOW_02
+WDOG_FLOW_03
+WDOG_FLOW_04
+WDOG_CLR_01
+WDOG_CLR_03
+WDOG_INT_01
+WDOG_INT_02
+WDOG_INT_03
+WDOG_LOCK_01
+WDOG_LOCK_03
+WDOG_LOCK_02
+WDOG_LOCK_06
+WDOG_ITM_01
+WDOG_ITM_02
+WDOG_ITM_04
+WDOG_ITM_05
+WDOG_SIG_01
+WDOG_SIG_02
+
+Files in repository related to this coverage map
+-----------------------------------------------
+- verification/uvm/tests/wdog_reset_test.svh
+- verification/uvm/tests/wdog_lock_test.svh
+- verification/uvm/tests/wdog_load_control_test.svh
+- verification/uvm/tests/wdog_interrupt_flow_test.svh
+- verification/uvm/tests/wdog_sanity_test.svh
+- verification/uvm/tests/wdog_value_test.svh
+- verification/uvm/tests/wdog_interrupt_status_test.svh
+- verification/uvm/seqlib/wdog_reset_seq.svh
+- verification/uvm/seqlib/wdog_lock_seq.svh
+- verification/uvm/seqlib/wdog_load_control_seq.svh
+- verification/uvm/seqlib/wdog_interrupt_flow_seq.svh
+- verification/uvm/seqlib/wdog_sanity_seq.svh
+- verification/uvm/seqlib/wdog_value_seq.svh
+- verification/uvm/seqlib/wdog_interrupt_status_seq.svh

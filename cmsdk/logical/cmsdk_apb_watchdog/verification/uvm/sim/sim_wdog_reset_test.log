@@ -1,0 +1,64 @@
+[Running TESTNAME=wdog_reset_test in command-line mode...]
+Reading pref.tcl
+
+# 2021.2_1
+
+# vsim -c -voptargs="+acc" -sv_lib /home/paranthapa/Downloads/questasim/uvm-1.2/linux_x86_64/uvm_dpi work.tb_top "+UVM_TESTNAME=wdog_reset_test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "run -all; quit -f" 
+# Start time: 13:26:59 on Aug 31,2026
+# Loading /tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-14/export_tramp.so
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 2021.2_1 linux_x86_64 May 15 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# different random seeds from your non-debug simulations.
+# Loading sv_std.std
+# Loading work.wdog_apb_if(fast)
+# Loading work.wdog_domain_if(fast)
+# Loading work.uvm_pkg(fast)
+# Loading work.watchdog_ral(fast)
+# Loading work.wdog_pkg(fast)
+# Loading work.uvm_pkg_sv_unit(fast)
+# Loading work.tb_top(fast)
+# Loading work.wdog_apb_if(fast__2)
+# Loading work.wdog_domain_if(fast__2)
+# Loading work.cmsdk_apb_watchdog(fast)
+# Loading work.cmsdk_apb_watchdog_frc(fast)
+# Compiling /tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-7.4.0/exportwrapper.c
+# ** Fatal: (vsim-3828) Could not link 'vsim_auto_compile.so': cmd = '/home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/gcc -shared -fPIC -o "/tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-7.4.0/vsim_auto_compile.so"  "/tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-7.4.0/exportwrapper.o"   -Wl,-Bsymbolic '
+# (vsim-50) A call to system(/home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/gcc -shared -fPIC -o "/tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-7.4.0/vsim_auto_compile.so"  "/tmp/paranthapa@localhost.localdomain_dpi_42435/linux_x86_64_gcc-7.4.0/exportwrapper.o"   -Wl,-Bsymbolic  >'/tmp/questatmp.0JNSvN' 2>&1) returned error code '1'.
+#    The logfile contains the following messages:
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib/../lib64/crti.o: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010002
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib/../lib64/crti.o: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010001
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib64/libc.so.6: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0008002
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib64/libc.so.6: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010001
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib64/libc.so.6: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010002
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: /lib64/libc.so.6: unknown type [0x13] section `.relr.dyn'
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: skipping incompatible /lib64/libc.so.6 when searching for /lib64/libc.so.6
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: cannot find /lib64/libc.so.6
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /usr/lib64/libc_nonshared.a(at_quick_exit.oS): unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010002
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /usr/lib64/libc_nonshared.a(at_quick_exit.oS): unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010001
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib64/ld-linux-x86-64.so.2: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010001
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: warning: /lib64/ld-linux-x86-64.so.2: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0010002
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: /lib64/ld-linux-x86-64.so.2: unknown type [0x13] section `.relr.dyn'
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: skipping incompatible /lib64/ld-linux-x86-64.so.2 when searching for /lib64/ld-linux-x86-64.so.2
+# /home/paranthapa/Downloads/questasim/gcc-7.4.0-linux_x86_64/bin/../libexec/gcc/x86_64-pc-linux-gnu/7.4.0/ld: cannot find /lib64/ld-linux-x86-64.so.2
+# collect2: error: ld returned 1 exit status
+# 
+# 
+# FATAL ERROR while loading design
+# Error loading design
+# End time: 13:27:03 on Aug 31,2026, Elapsed time: 0:00:04
+# Errors: 1, Warnings: 0
