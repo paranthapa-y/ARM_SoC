@@ -34,7 +34,8 @@ TEST_LIST   := apb_mux_tests cxdt default_slaves_tests designtest_m3 \
                dhry dualtimer_demo gpio_driver_tests gpio_tests hello \
                interrupt_demo memory_tests self_reset_demo \
                sleep_demo timer_driver_tests timer_tests uart_driver_tests \
-               uart_tests watchdog_demo rtx_demo
+               uart_tests watchdog_demo rtx_demo reset_test uart_raw uart_rbw \
+	       uart_id_test uart_tx_rx
 
 TIMESCALE := -timescale=1ns/10ps
 
@@ -420,7 +421,7 @@ clean:
 	@rm -rf dump.fsdb
 	@rm -rf dump.vcd
 	@rm -rf verdiLog
-
+	@rm -f *.txt
 # Clean all test code and compile testbench
 clean_all: clean_tests clean
 

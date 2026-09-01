@@ -1,0 +1,613 @@
+# Reading pref.tcl
+# //  Questa Sim-64
+# //  Version 2021.2_1 linux_x86_64 May 15 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# vsim -gui -voptargs="+acc" -sv_lib /home/paranthapa/Downloads/questasim/uvm-1.2/linux_x86_64/uvm_dpi work.tb_top "+UVM_TESTNAME=wdog_interrupt_flow_test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "add wave -position insertpoint sim:/tb_top/apb_vif/*; add wave -position insertpoint sim:/tb_top/u_dut/*; run -all" 
+# Start time: 15:22:12 on Aug 31,2026
+# Loading /tmp/paranthapa@localhost.localdomain_dpi_77271/linux_x86_64_gcc-14/export_tramp.so
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vsim-8785) UVM-aware debugging capabilities will be disabled since no compiled "questa_uvm_pkg" can be found.
+# This also means that later if you turn on UVM-aware debugging your debug simulations may have
+# different random seeds from your non-debug simulations.
+# Loading sv_std.std
+# Loading work.wdog_apb_if(fast)
+# Loading work.wdog_domain_if(fast)
+# Loading work.uvm_pkg(fast)
+# Loading work.watchdog_ral(fast)
+# Loading work.wdog_pkg(fast)
+# Loading work.uvm_pkg_sv_unit(fast)
+# Loading work.tb_top(fast)
+# Loading work.wdog_apb_if(fast__2)
+# Loading work.wdog_domain_if(fast__2)
+# Loading work.cmsdk_apb_watchdog(fast)
+# Loading work.cmsdk_apb_watchdog_frc(fast)
+# Compiling /tmp/paranthapa@localhost.localdomain_dpi_77271/linux_x86_64_gcc-14/exportwrapper.c
+# Loading /tmp/paranthapa@localhost.localdomain_dpi_77271/linux_x86_64_gcc-14/vsim_auto_compile.so
+# Loading /home/paranthapa/Downloads/questasim/uvm-1.2/linux_x86_64/uvm_dpi.so
+# add wave -position insertpoint sim:/tb_top/apb_vif/*
+#  add wave -position insertpoint sim:/tb_top/u_dut/*
+#  run -all
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(392) @ 0: reporter [UVM/RELNOTES] 
+# ----------------------------------------------------------------
+# UVM-1.2
+# (C) 2007-2014 Mentor Graphics Corporation
+# (C) 2007-2014 Cadence Design Systems, Inc.
+# (C) 2006-2014 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# (C) 2013-2014 NVIDIA Corporation
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO @ 0: reporter [RNTST] Running test wdog_interrupt_flow_test...
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(579) @ 0: reporter [UVMTOP] UVM testbench topology:
+# ----------------------------------------------------------------
+# Name                       Type                      Size  Value
+# ----------------------------------------------------------------
+# uvm_test_top               wdog_interrupt_flow_test  -     @351 
+#   env                      wdog_env                  -     @364 
+#     apb_agent              wdog_apb_agent            -     @373 
+#       driver               wdog_apb_driver           -     @566 
+#         rsp_port           uvm_analysis_port         -     @585 
+#         seq_item_port      uvm_seq_item_pull_port    -     @575 
+#       monitor              wdog_apb_monitor          -     @547 
+#         ap                 uvm_analysis_port         -     @556 
+#       sequencer            wdog_apb_sequencer        -     @595 
+#         rsp_export         uvm_analysis_export       -     @604 
+#         seq_item_export    uvm_seq_item_pull_imp     -     @722 
+#         arbitration_queue  array                     0     -    
+#         lock_queue         array                     0     -    
+#         num_last_reqs      integral                  32    'd1  
+#         num_last_rsps      integral                  32    'd1  
+#     ral_predictor          wdog_apb_reg_predictor    -     @517 
+#       bus_in               uvm_analysis_imp          -     @526 
+#       reg_ap               uvm_analysis_port         -     @536 
+#     sb                     wdog_scoreboard           -     @391 
+#       apb_imp              uvm_analysis_imp_apb      -     @400 
+#       wdog_imp             uvm_analysis_imp_wdog     -     @410 
+#     wdog_agent             wdog_domain_agent         -     @382 
+#       driver               wdog_domain_driver        -     @759 
+#         rsp_port           uvm_analysis_port         -     @778 
+#         seq_item_port      uvm_seq_item_pull_port    -     @768 
+#       monitor              wdog_domain_monitor       -     @740 
+#         ap                 uvm_analysis_port         -     @749 
+#       sequencer            wdog_domain_sequencer     -     @788 
+#         rsp_export         uvm_analysis_export       -     @797 
+#         seq_item_export    uvm_seq_item_pull_imp     -     @915 
+#         arbitration_queue  array                     0     -    
+#         lock_queue         array                     0     -    
+#         num_last_reqs      integral                  32    'd1  
+#         num_last_rsps      integral                  32    'd1  
+# ----------------------------------------------------------------
+# 
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(22) @ 133000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] Running interrupt flow checks (WDOG_FLOW_01..04)
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(31) @ 2235000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] WDOGRIS at first timeout = 0x00000001
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(39) @ 4315000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] WDOGRIS after clear/reload = 0x00000000
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_objection.svh(1270) @ 4315000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../env/wdog_scoreboard.svh(274) @ 4315000: uvm_test_top.env.sb [SB_SUMMARY] scoreboard checks: 23 passed, 189 failed
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_report_server.svh(847) @ 4315000: reporter [UVM/REPORT/SERVER] 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    8
+# UVM_WARNING :    0
+# UVM_ERROR :  189
+# UVM_FATAL :    0
+# ** Report counts by id
+# [RNTST]     1
+# [SB_SUMMARY]     1
+# [SB_WDOG]   189
+# [TEST_DONE]     1
+# [UVM/RELNOTES]     1
+# [UVMTOP]     1
+# [wdog_interrupt_flow_seq]     3
+# 
+# ** Note: $finish    : /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(517)
+#    Time: 4315 ns  Iteration: 76  Instance: /tb_top
+# 1
+# Break in Task uvm_pkg/uvm_root::run_test at /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh line 517
+add wave -position insertpoint sim:/tb_top/u_dut/u_apb_watchdog_frc/*
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.wdog_apb_if(fast)
+# Loading work.wdog_domain_if(fast)
+# Loading work.uvm_pkg(fast)
+# Loading work.watchdog_ral(fast)
+# Loading work.wdog_pkg(fast)
+# Loading work.uvm_pkg_sv_unit(fast)
+# Loading work.tb_top(fast)
+# Loading work.wdog_apb_if(fast__2)
+# Loading work.wdog_domain_if(fast__2)
+# Loading work.cmsdk_apb_watchdog(fast)
+# Loading work.cmsdk_apb_watchdog_frc(fast)
+# Loading /tmp/paranthapa@localhost.localdomain_dpi_77271/linux_x86_64_gcc-14/vsim_auto_compile.so
+# Loading /home/paranthapa/Downloads/questasim/uvm-1.2/linux_x86_64/uvm_dpi.so
+run -all
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(392) @ 0: reporter [UVM/RELNOTES] 
+# ----------------------------------------------------------------
+# UVM-1.2
+# (C) 2007-2014 Mentor Graphics Corporation
+# (C) 2007-2014 Cadence Design Systems, Inc.
+# (C) 2006-2014 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# (C) 2013-2014 NVIDIA Corporation
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO @ 0: reporter [RNTST] Running test wdog_interrupt_flow_test...
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(579) @ 0: reporter [UVMTOP] UVM testbench topology:
+# ----------------------------------------------------------------
+# Name                       Type                      Size  Value
+# ----------------------------------------------------------------
+# uvm_test_top               wdog_interrupt_flow_test  -     @351 
+#   env                      wdog_env                  -     @364 
+#     apb_agent              wdog_apb_agent            -     @373 
+#       driver               wdog_apb_driver           -     @566 
+#         rsp_port           uvm_analysis_port         -     @585 
+#         seq_item_port      uvm_seq_item_pull_port    -     @575 
+#       monitor              wdog_apb_monitor          -     @547 
+#         ap                 uvm_analysis_port         -     @556 
+#       sequencer            wdog_apb_sequencer        -     @595 
+#         rsp_export         uvm_analysis_export       -     @604 
+#         seq_item_export    uvm_seq_item_pull_imp     -     @722 
+#         arbitration_queue  array                     0     -    
+#         lock_queue         array                     0     -    
+#         num_last_reqs      integral                  32    'd1  
+#         num_last_rsps      integral                  32    'd1  
+#     ral_predictor          wdog_apb_reg_predictor    -     @517 
+#       bus_in               uvm_analysis_imp          -     @526 
+#       reg_ap               uvm_analysis_port         -     @536 
+#     sb                     wdog_scoreboard           -     @391 
+#       apb_imp              uvm_analysis_imp_apb      -     @400 
+#       wdog_imp             uvm_analysis_imp_wdog     -     @410 
+#     wdog_agent             wdog_domain_agent         -     @382 
+#       driver               wdog_domain_driver        -     @759 
+#         rsp_port           uvm_analysis_port         -     @778 
+#         seq_item_port      uvm_seq_item_pull_port    -     @768 
+#       monitor              wdog_domain_monitor       -     @740 
+#         ap                 uvm_analysis_port         -     @749 
+#       sequencer            wdog_domain_sequencer     -     @788 
+#         rsp_export         uvm_analysis_export       -     @797 
+#         seq_item_export    uvm_seq_item_pull_imp     -     @915 
+#         arbitration_queue  array                     0     -    
+#         lock_queue         array                     0     -    
+#         num_last_reqs      integral                  32    'd1  
+#         num_last_rsps      integral                  32    'd1  
+# ----------------------------------------------------------------
+# 
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(22) @ 133000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] Running interrupt flow checks (WDOG_FLOW_01..04)
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=0
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 1993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(31) @ 2235000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] WDOGRIS at first timeout = 0x00000001
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=1 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 2993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3333000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3353000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3373000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3393000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3413000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3433000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3453000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3473000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3493000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3513000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3533000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3553000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3573000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3593000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3613000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3633000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3653000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3673000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3693000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3713000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3733000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3753000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3773000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3793000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3813000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3833000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3853000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3873000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3893000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3913000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3933000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3953000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3973000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 3993000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4013000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4033000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4053000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4073000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4093000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4113000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4133000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4153000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4173000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4193000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4213000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4233000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4253000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4273000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4293000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_ERROR ../env/wdog_scoreboard.svh(253) @ 4313000: uvm_test_top.env.sb [SB_WDOG] wdog tick MISMATCH: expected int=0 res=0 got clken=1 resn=1 eco=0x0 | int=0 res=1
+# UVM_INFO ../seqlib/wdog_interrupt_flow_seq.svh(39) @ 4315000: uvm_test_top.env.apb_agent.sequencer@@seq [wdog_interrupt_flow_seq] WDOGRIS after clear/reload = 0x00000000
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_objection.svh(1270) @ 4315000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../env/wdog_scoreboard.svh(274) @ 4315000: uvm_test_top.env.sb [SB_SUMMARY] scoreboard checks: 23 passed, 189 failed
+# UVM_INFO /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_report_server.svh(847) @ 4315000: reporter [UVM/REPORT/SERVER] 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    8
+# UVM_WARNING :    0
+# UVM_ERROR :  189
+# UVM_FATAL :    0
+# ** Report counts by id
+# [RNTST]     1
+# [SB_SUMMARY]     1
+# [SB_WDOG]   189
+# [TEST_DONE]     1
+# [UVM/RELNOTES]     1
+# [UVMTOP]     1
+# [wdog_interrupt_flow_seq]     3
+# 
+# ** Note: $finish    : /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh(517)
+#    Time: 4315 ns  Iteration: 76  Instance: /tb_top
+# 1
+# Break in Task uvm_pkg/uvm_root::run_test at /home/paranthapa/Downloads/questasim/verilog_src/uvm-1.2/src/base/uvm_root.svh line 517

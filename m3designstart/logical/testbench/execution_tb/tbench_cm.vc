@@ -28,10 +28,10 @@
 +define+TARMAC_BUILD
 
 // ============= Verilog library extensions ===========
-+libext+.v+.vlib
++libext+.v+.sv+.vlib
 
 // ================= Top level file ===================
-../verilog/tb_fpga_shield.v
+../verilog/tb_fpga_shield.sv
 
 // ================= Testbench components =============
 -y ../verilog/

@@ -286,11 +286,11 @@
        if (tx_ovrirq_en!=0) new_ctrl |= CM3DS_MPS2_UART_CTRL_TXORIRQEN_Msk;
        if (rx_ovrirq_en!=0) new_ctrl |= CM3DS_MPS2_UART_CTRL_RXORIRQEN_Msk;
 
-       CM3DS_MPS2_UART->CTRL = 0;         /* Disable UART when changing configuration */
+       CM3DS_MPS2_UART->CTRL.word = 0;         /* Disable UART when changing configuration */
        CM3DS_MPS2_UART->BAUDDIV = divider;
-       CM3DS_MPS2_UART->CTRL = new_ctrl;  /* Update CTRL register to new value */
+       CM3DS_MPS2_UART->CTRL.word = new_ctrl;  /* Update CTRL register to new value */
 
-       if((CM3DS_MPS2_UART->STATE & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))) return 1;
+       if((CM3DS_MPS2_UART->STATE.word & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))) return 1;
        else return 0;
  }
 
@@ -304,7 +304,7 @@
 
  uint32_t CM3DS_MPS2_uart_GetRxBufferFull(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-        return ((CM3DS_MPS2_UART->STATE & CM3DS_MPS2_UART_STATE_RXBF_Msk)>> CM3DS_MPS2_UART_STATE_RXBF_Pos);
+        return ((CM3DS_MPS2_UART->STATE.bit.rx_buff_full));
  }
 
 /**
@@ -317,7 +317,7 @@
 
  uint32_t CM3DS_MPS2_uart_GetTxBufferFull(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-        return ((CM3DS_MPS2_UART->STATE & CM3DS_MPS2_UART_STATE_TXBF_Msk)>> CM3DS_MPS2_UART_STATE_TXBF_Pos);
+        return ((CM3DS_MPS2_UART->STATE.bit.tx_buff_full));
  }
 
 /**
@@ -331,7 +331,7 @@
 
  void CM3DS_MPS2_uart_SendChar(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART, char txchar)
  {
-       while(CM3DS_MPS2_UART->STATE & CM3DS_MPS2_UART_STATE_TXBF_Msk);
+       while(CM3DS_MPS2_UART->STATE.word & CM3DS_MPS2_UART_STATE_TXBF_Msk);
        CM3DS_MPS2_UART->DATA = (uint32_t)txchar;
  }
 
@@ -345,7 +345,7 @@
 
  char CM3DS_MPS2_uart_ReceiveChar(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       while(!(CM3DS_MPS2_UART->STATE & CM3DS_MPS2_UART_STATE_RXBF_Msk));
+       while(!(CM3DS_MPS2_UART->STATE.word & CM3DS_MPS2_UART_STATE_RXBF_Msk));
        return (char)(CM3DS_MPS2_UART->DATA);
  }
 
@@ -363,7 +363,7 @@
 
  uint32_t CM3DS_MPS2_uart_GetOverrunStatus(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-        return ((CM3DS_MPS2_UART->STATE & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))>>CM3DS_MPS2_UART_STATE_TXOR_Pos);
+        return ((CM3DS_MPS2_UART->STATE.word & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))>>CM3DS_MPS2_UART_STATE_TXOR_Pos);
  }
 
 /**
@@ -379,8 +379,8 @@
 
  uint32_t CM3DS_MPS2_uart_ClearOverrunStatus(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       CM3DS_MPS2_UART->STATE = (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk);
-        return ((CM3DS_MPS2_UART->STATE & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))>>CM3DS_MPS2_UART_STATE_TXOR_Pos);
+       CM3DS_MPS2_UART->STATE.word = (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk);
+        return ((CM3DS_MPS2_UART->STATE.word & (CM3DS_MPS2_UART_STATE_RXOR_Msk | CM3DS_MPS2_UART_STATE_TXOR_Msk))>>CM3DS_MPS2_UART_STATE_TXOR_Pos);
  }
 
 /**
@@ -406,7 +406,7 @@
 
  uint32_t CM3DS_MPS2_uart_GetTxIRQStatus(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       return ((CM3DS_MPS2_UART->INTSTATUS & CM3DS_MPS2_UART_CTRL_TXIRQ_Msk)>>CM3DS_MPS2_UART_CTRL_TXIRQ_Pos);
+       return ((CM3DS_MPS2_UART->INTSTATUS.word & CM3DS_MPS2_UART_CTRL_TXIRQ_Msk)>>CM3DS_MPS2_UART_CTRL_TXIRQ_Pos);
  }
 
 /**
@@ -419,7 +419,7 @@
 
  uint32_t CM3DS_MPS2_uart_GetRxIRQStatus(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       return ((CM3DS_MPS2_UART->INTSTATUS & CM3DS_MPS2_UART_CTRL_RXIRQ_Msk)>>CM3DS_MPS2_UART_CTRL_RXIRQ_Pos);
+       return ((CM3DS_MPS2_UART->INTSTATUS.word & CM3DS_MPS2_UART_CTRL_RXIRQ_Msk)>>CM3DS_MPS2_UART_CTRL_RXIRQ_Pos);
  }
 
  /**
@@ -432,7 +432,7 @@
 
  void CM3DS_MPS2_uart_ClearTxIRQ(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       CM3DS_MPS2_UART->INTCLEAR = CM3DS_MPS2_UART_CTRL_TXIRQ_Msk;
+       CM3DS_MPS2_UART->INTCLEAR.word = CM3DS_MPS2_UART_CTRL_TXIRQ_Msk;
  }
 
 /**
@@ -445,7 +445,7 @@
 
  void CM3DS_MPS2_uart_ClearRxIRQ(CM3DS_MPS2_UART_TypeDef *CM3DS_MPS2_UART)
  {
-       CM3DS_MPS2_UART->INTCLEAR = CM3DS_MPS2_UART_CTRL_RXIRQ_Msk;
+       CM3DS_MPS2_UART->INTCLEAR.word = CM3DS_MPS2_UART_CTRL_RXIRQ_Msk;
  }
 
 
