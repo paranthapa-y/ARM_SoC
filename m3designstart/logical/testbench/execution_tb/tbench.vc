@@ -25,11 +25,11 @@
 +define+SIMULATION=1
 
 // ============= Verilog library extensions ===========
-// Add SV library extensions - Vishnu
-+libext+.v+.sv+.vlib
++libext+.v+.vlib
+
 // ================= Top level file ===================
-../verilog/tb_fpga_shield.sv
-../verilog/iot_tracker.v
+../verilog/tb_fpga_shield.v
+
 // ================= Testbench components =============
 -y ../verilog/
 +incdir+../verilog/
@@ -88,8 +88,6 @@
 -y ../cxdt/verilog
 
 // TRNG
-//Gtech file should be compiled before inv_chain files - vishnu
-../../../../trng/logical/top/inv_chain/gtech_models.v
 -y ../../../../trng/logical
 -y ../../../../trng/logical/top
 -y ../../../../trng/logical/top/inv_chain

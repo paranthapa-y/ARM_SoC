@@ -159,7 +159,6 @@ all_gcc:
 		$(SOFTWARE_DIR)/common/validation/$(TESTNAME).c \
 		$(SOFTWARE_DIR)/common/retarget/retarget.c \
 		$(SOFTWARE_DIR)/common/retarget/uart_stdout.c \
-		$(SOFTWARE_DIR)/common/retarget/uart_stdout1.c \
 		$(DEVICE_DIR)/Source/$(SYSTEM_FILE).c \
 		-I $(DEVICE_DIR)/Include -I $(CORE_DIR) \
                 -I $(SOFTWARE_DIR)/common/retarget  \

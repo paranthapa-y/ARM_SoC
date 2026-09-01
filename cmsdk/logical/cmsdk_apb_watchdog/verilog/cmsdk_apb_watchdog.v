@@ -293,7 +293,7 @@ module cmsdk_apb_watchdog (
          wdog_pdata = {8{1'bx}};
        end
       endcase
-    end // block: p_wdog_pdata_combk
+    end // block: p_wdog_pdata_comb
 
   // Register used to reduce output delay during reads.
   always @ (negedge PRESETn or posedge PCLK)

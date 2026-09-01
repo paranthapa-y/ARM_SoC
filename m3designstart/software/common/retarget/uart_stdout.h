@@ -29,4 +29,3 @@ extern unsigned char UartPutc(unsigned char my_ch);
 //extern unsigned char Uart1Putc(unsigned char my_ch);
 extern unsigned char UartGetc(void);
 extern unsigned char UartEndSimulation(void);
-extern int printf1(int uart_sel, const char *fmt, ...);

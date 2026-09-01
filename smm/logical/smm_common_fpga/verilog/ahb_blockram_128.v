@@ -285,13 +285,6 @@ module ahb_blockram_128
   integer i;
   reg [127:0] fileimage [0:AWT];
 
-  // Byte address, within this block's decoded window, at which
-  // flash_main.ini is preloaded. Defaults to 0 (existing behaviour).
-  // Override from the terminal without recompiling, e.g.:
-  //   make run TESTNAME=hello PLUSARGS="+FLASH_LOAD_ADDR=1000"
-  integer flash_load_addr;
-  integer flash_load_line;
-
   initial
   begin
     for (i=0;i<=AWT; i= i+1)
@@ -299,28 +292,13 @@ module ahb_blockram_128
       fileimage[i] = 0; // initialize memory to 0
     end
 
-    flash_load_addr = 0;
-    if ($value$plusargs("FLASH_LOAD_ADDR=%h", flash_load_addr)) begin
-      if (flash_load_addr[3:0] != 4'b0) begin
-        $display("ERROR: FLASH_LOAD_ADDR 0x%h is not 16-byte aligned", flash_load_addr);
-        $finish;
-      end
-      if (flash_load_addr >= (1 << ADDRESSWIDTH)) begin
-        $display("ERROR: FLASH_LOAD_ADDR 0x%h is outside the blockram_128 address range (0x0-0x%h)", flash_load_addr, (1 << ADDRESSWIDTH) - 1);
-        $finish;
-      end
-      $display("FLASH: loading flash_main.ini at offset 0x%h", flash_load_addr);
-    end
-    flash_load_line = flash_load_addr >> 4;
-
-    $readmemh("./flash_main.ini", fileimage, flash_load_line);
+    $readmemh("./flash_main.ini", fileimage);
 
     // Copy from single array to splitted array
     for (i=0;i<=AWT; i= i+1)
     begin
       {BRAM15[i],BRAM14[i],BRAM13[i],BRAM12[i],BRAM11[i],BRAM10[i],BRAM9[i],BRAM8[i],
        BRAM7[i],BRAM6[i],BRAM5[i],BRAM4[i],BRAM3[i],BRAM2[i],BRAM1[i],BRAM0[i]} = fileimage[i];
-      //  $display("BRAM[%d] = %h", i, fileimage[i]);
     end
   end
 

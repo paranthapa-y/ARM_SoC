@@ -171,79 +171,14 @@ typedef enum IRQn
 #endif
 
 /*------------- Universal Asynchronous Receiver Transmitter (UART) -----------*/
-typedef union
-{
-    uint32_t word;
-
-    struct
-    {
-        uint32_t TXEN      :1;
-        uint32_t RXEN      :1;
-        uint32_t TXIRQEN   :1;
-        uint32_t RXIRQEN   :1;
-        uint32_t TXORIRQEN :1;
-        uint32_t RXORIRQEN :1;
-        uint32_t HIGHEN    :1;
-        uint32_t RESERVED  :25;
-    } bit;
-
-} UART_CTRL_Type;
-
-
-typedef union
-{
-	uint32_t word;
-
-	struct
-	{
-		uint32_t tx_buff_full :1;
-		uint32_t rx_buff_full :1;
-		uint32_t tx_overrun   :1;
-		uint32_t rx_overrun   :1;
-		uint32_t RESERVED   :28;
-	} bit;
-} UART_STATUS_TYPE;
-
-typedef union
-{
-    uint32_t word;
-
-    struct
-    {
-        uint32_t TXIRQ :1;
-        uint32_t RXIRQ :1;
-        uint32_t TXOVR :1;
-        uint32_t RXOVR :1;
-        uint32_t RESERVED :28;
-    } bit;
-
-} UART_INTSTATUS_Type;
-
-typedef union
-{
-    uint32_t word;
-
-    struct
-    {
-        uint32_t TXIRQ_CLR :1;
-        uint32_t RXIRQ_CLR :1;
-        uint32_t TXOVR_CLR :1;
-        uint32_t RXOVR_CLR :1;
-        uint32_t RESERVED :28;
-    } bit;
-
-} UART_INTCLEAR_Type;
-
-
 typedef struct
 {
   __IO   uint32_t  DATA;          /*!< Offset: 0x000 Data Register    (R/W) */
-  __IO   UART_STATUS_TYPE  STATE;         /*!< Offset: 0x004 Status Register  (R/W) */
-  __IO UART_CTRL_Type CTRL;         /*!< Offset: 0x008 Control Register (R/W) */
-    union
-    {
-        __I UART_INTSTATUS_Type INTSTATUS;
-        __O UART_INTCLEAR_Type  INTCLEAR;
+  __IO   uint32_t  STATE;         /*!< Offset: 0x004 Status Register  (R/W) */
+  __IO   uint32_t  CTRL;          /*!< Offset: 0x008 Control Register (R/W) */
+  union {
+    __I    uint32_t  INTSTATUS;   /*!< Offset: 0x00C Interrupt Status Register (R/ ) */
+    __O    uint32_t  INTCLEAR;    /*!< Offset: 0x00C Interrupt Clear Register ( /W) */
     };
   __IO   uint32_t  BAUDDIV;       /*!< Offset: 0x010 Baudrate Divider Register (R/W) */
 

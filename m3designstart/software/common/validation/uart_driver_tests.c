@@ -202,9 +202,7 @@ int Uart_Buffull(void)             //function for testing the Buffer full functi
 
     if((CM3DS_MPS2_uart_GetTxBufferFull(CM3DS_MPS2_UART2) == 0) && (CM3DS_MPS2_uart_GetRxBufferFull(CM3DS_MPS2_UART3) != 1)){
       if(i < 12){
-//	printf("I am GROOT");
         CM3DS_MPS2_UART2->DATA = (uint32_t)transmit[i];
- //     printf("Transmitting data data... %c\n", (uint32_t)transmit[i]);
         i++;
       }
     }

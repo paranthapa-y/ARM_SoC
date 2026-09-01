@@ -1,9 +1,0 @@
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
-  CREATE_STREAM @133000 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.apb_agent.sequencer STREAM:1017}
